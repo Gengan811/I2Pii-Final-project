@@ -4,6 +4,7 @@
 #include "UI/Component/Image.hpp"
 #include "Engine/Point.hpp"
 #include "Sprite.hpp"
+#include "Engine/LOG.hpp"
 
 namespace Engine {
 	Sprite::Sprite(std::string img, float x, float y, float w, float h, float anchorX, float anchorY,

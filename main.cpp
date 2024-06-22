@@ -7,6 +7,7 @@
 #include "Scene/LoseScene.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Scene/ScoreboardScene.hpp"
+#include "Scene/SettingsScene.hpp"
 #include "Scene/StageSelectScene.hpp"
 #include "Scene/StartScene.hpp"
 #include "Scene/WinScene.hpp"
@@ -22,6 +23,7 @@ int main(int argc, char** argv) {
     game.AddNewScene("character-select", new CharacterSelectScene());
     game.AddNewScene("start", new StartScene());
     game.AddNewScene("scoreboard-scene", new ScoreboardScene());
+    game.AddNewScene("settings", new SettingsScene());
 
     game.Start("start", 60, 1600, 832);
     return 0;

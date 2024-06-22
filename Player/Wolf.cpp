@@ -3,5 +3,22 @@
 //
 
 #include "Wolf.hpp"
+#include "Engine/LOG.hpp"
 
-Wolf::Wolf(int x, int y) : Player("play/enemy-2.png", x, y, 10, 50, 5, 5) {}
+Wolf::Wolf(int x, int y)
+    : RangedPlayer("character/wolf.png",
+                   "play/bullet/bullet-1.png",
+                   x,
+                   y,
+                   50,
+                   100,
+                   5,
+                   500) {}
+void Wolf::CreateBullet() {}
+void Wolf::Update(float deltaTime) {
+    RangedPlayer::Update(deltaTime);
+}
+
+void Wolf::Draw() const {
+    RangedPlayer::Draw();
+}

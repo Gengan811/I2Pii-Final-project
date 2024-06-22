@@ -1,11 +1,13 @@
 #include <cmath>
 #include "Point.hpp"
 
+#define EPSILON 1e-3
+
 namespace Engine {
 	Point::Point() : Point(0, 0) {}
 	Point::Point(float x, float y) : x(x), y(y) {}
 	bool Point::operator==(const Point& rhs) const {
-		return x == rhs.x && y == rhs.y;
+		return abs(x - rhs.x) < EPSILON && abs(y - rhs.y) < EPSILON;
 	}
 	bool Point::operator!=(const Point& rhs) const {
 		return !operator==(rhs);

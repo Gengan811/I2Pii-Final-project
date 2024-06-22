@@ -23,8 +23,16 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Engine/Collider.hpp
         UI/Animation/DirtyEffect.cpp
         UI/Animation/DirtyEffect.hpp
+        Player/Player.cpp
+        Player/Player.hpp
+        Player/RangedPlayer.cpp
+        Player/RangedPlayer.hpp
+        Player/Wolf.cpp
+        Player/Wolf.hpp
         Enemy/Enemy.cpp
         Enemy/Enemy.hpp
+        Enemy/RangedEnemy.cpp
+        Enemy/RangedEnemy.hpp
         UI/Animation/ExplosionEffect.cpp
         UI/Animation/ExplosionEffect.hpp
         Bullet/FireBullet.cpp
@@ -45,19 +53,13 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Engine/IScene.hpp
         UI/Component/Label.cpp
         UI/Component/Label.hpp
-        Bullet/LaserBullet.cpp
-        Bullet/LaserBullet.hpp
         Engine/LOG.cpp
         Engine/LOG.hpp
         Scene/LoseScene.cpp
         Scene/LoseScene.hpp
         main.cpp
-        Bullet/MissileBullet.cpp
-        Bullet/MissileBullet.hpp
         UI/Animation/Plane.cpp
         UI/Animation/Plane.hpp
-        Enemy/PlaneEnemy.cpp
-        Enemy/PlaneEnemy.hpp
         Scene/PlayScene.cpp
         Scene/PlayScene.hpp
         Engine/Point.cpp
@@ -72,12 +74,9 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Engine/Sprite.hpp
         Scene/StageSelectScene.cpp
         Scene/StageSelectScene.hpp
-        Enemy/TankEnemy.cpp
-        Enemy/TankEnemy.hpp
         Scene/WinScene.cpp
         Scene/WinScene.hpp
 
-        # TODO: [HACKATHON-1-SCENE] (2/4) Add the new scene source files here
         Scene/StartScene.cpp
         Scene/StartScene.hpp
         Scene/LoseScene.cpp
@@ -92,18 +91,10 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/ScoreboardScene.cpp
         Scene/TextInput.cpp
         Scene/TextInput.hpp
-        Bullet/FourthBullet.cpp
-        Bullet/FourthBullet.hpp
-        Enemy/FourthEnemy.cpp
-        Enemy/FourthEnemy.hpp
         Scene/CharacterSelectScene.cpp
         Scene/CharacterSelectScene.hpp
-        Player/Player.cpp
-        Player/Player.hpp
-        Player/Wolf.cpp
-        Player/Wolf.hpp
-        #        UI/Component/TextInput.cpp
-#        UI/Component/TextInput.hpp
+        Scene/SettingsScene.cpp
+        Scene/SettingsScene.hpp
 )
 
 IF (WIN32)

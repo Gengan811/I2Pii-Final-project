@@ -38,13 +38,13 @@ void CharacterSelectScene::Initialize() {
                                    halfH / 2 + 500, 255, 255, 255, 255, 0.5,
                                    0.5));
 
-    btn = new Engine::ImageButton("character/selee.png",
-                                  "character/selee.png", halfW + 100,
+    btn = new Engine::ImageButton("character/seele.png",
+                                  "character/seele.png", halfW + 100,
                                   halfH / 2, 350, 350);
     btn->SetOnClickCallback(
         std::bind(&CharacterSelectScene::PlayOnClick, this, 2));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Selee", "pirulen.ttf", 32,
+    AddNewObject(new Engine::Label("Seele", "pirulen.ttf", 32,
                                    halfW + 275, halfH / 2 + 500, 255, 255, 255,
                                    255, 0.5, 0.5));
 

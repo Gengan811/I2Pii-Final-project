@@ -4,10 +4,13 @@
 
 #ifndef WOLF_HPP
 #define WOLF_HPP
-#include "Player.hpp"
+#include "RangedPlayer.hpp"
 
-class Wolf : public Player {
+class Wolf : public RangedPlayer {
 public:
     Wolf(int x, int y);
+    void CreateBullet() override;
+    void Update(float deltaTime) override;
+    void Draw() const override;
 };
 #endif //WOLF_HPP

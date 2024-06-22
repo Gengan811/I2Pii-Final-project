@@ -10,10 +10,7 @@
 #include <vector>
 
 #include "Enemy/Enemy.hpp"
-#include "Enemy/FourthEnemy.hpp"
-#include "Enemy/PlaneEnemy.hpp"
 #include "Enemy/SoldierEnemy.hpp"
-#include "Enemy/TankEnemy.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -89,6 +86,7 @@ void PlayScene::Terminate() {
     IScene::Terminate();
 }
 void PlayScene::Update(float deltaTime) {
+    IScene::Update(deltaTime);
     if (EnemyGroup->GetObjects().empty()) {
         // Free resources.
         if (lives <= 0)
@@ -100,6 +98,7 @@ void PlayScene::Update(float deltaTime) {
             Engine::GameEngine::GetInstance().ChangeScene("win");
         }
     }
+    player->Update(deltaTime);
 }
 
 void PlayScene::Draw() const {
@@ -171,13 +170,9 @@ void PlayScene::ReadMap() {
         for (int j = 0; j < MapWidth; j++) {
             const int num = mapData[i * MapWidth + j];
             mapState[i][j] = num ? TILE_EMPTY : TILE_OBSTACLE;
-            if (num)
+            if (!num)
                 TileMapGroup->AddNewObject(
-                    new Engine::Image("play/floor.png", j * BlockSize,
-                                      i * BlockSize, BlockSize, BlockSize));
-            else
-                TileMapGroup->AddNewObject(
-                    new Engine::Image("play/dirt.png", j * BlockSize,
+                    new Engine::Image("play/map_floor.png", j * BlockSize,
                                       i * BlockSize, BlockSize, BlockSize));
         }
     }
@@ -205,12 +200,18 @@ void PlayScene::ReadEnemy() {
     fin.close();
 }
 void PlayScene::ConstructUI() {
+    int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
+    int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
+    AddNewObject(new Engine::Image(
+        std::string("play/background/Scene") + std::to_string(MapId) + ".png",
+        0, 0, w, h));
     ReadMap();
     ReadEnemy();
-
     switch (CharacterId) {
         case 1:
-            AddNewControlObject(player = new Wolf(0, 50));
+            AddNewControlObject(player =
+                                    new Wolf(BlockSize / 2 + BlockSize * 10,
+                                             BlockSize / 2 + BlockSize * 10));
             break;
 
         default:
@@ -245,36 +246,26 @@ bool PlayScene::CheckSpaceValid(int x, int y) {
     // All enemy have path to exit.
     mapState[y][x] = TILE_OBSTACLE;
     mapDistance = map;
-    for (auto& it : EnemyGroup->GetObjects())
-        dynamic_cast<Enemy*>(it)->UpdatePath(mapDistance);
     return true;
 }
 std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
-    // Reverse BFS to find path.
     std::vector<std::vector<int>> map(
         MapHeight, std::vector<int>(std::vector<int>(MapWidth, -1)));
     std::queue<Engine::Point> que;
-    // Push end point.
-    // BFS from end point.
-    if (mapState[MapHeight - 1][MapWidth - 1] != TILE_OBSTACLE)
-        return map;
-    que.push(Engine::Point(MapWidth - 1, MapHeight - 1));
-    map[MapHeight - 1][MapWidth - 1] = 0;
+    int x = static_cast<int>(floor(player->Position.x / PlayScene::BlockSize));
+    int y = static_cast<int>(floor(player->Position.y / PlayScene::BlockSize));
+    que.push(Engine::Point(x, y));
+    map[y][x] = 0;
     while (!que.empty()) {
         Engine::Point p = que.front();
         que.pop();
-        // TODO: [BFS PathFinding] (1/1): Implement a BFS starting from the most
-        // right-bottom block in the map.
-        //               For each step you should assign the corresponding
-        //               distance to the most right-bottom block. mapState[y][x]
-        //               is TILE_OBSTACLE if it is empty.
         for (auto dir : directions) {
             Engine::Point next = p + dir;
             if (next.x < 0 || next.x >= MapWidth || next.y < 0 ||
                 next.y >= MapHeight)
                 continue;
-            if (map[next.y][next.x] != -1 ||
-                mapState[next.y][next.x] != TILE_OBSTACLE)
+            if (map[next.y][next.x] == -1 ||
+                mapState[next.y][next.x] != TILE_EMPTY)
                 continue;
             map[next.y][next.x] = map[p.y][p.x] + 1;
             que.push(next);
