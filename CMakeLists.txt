@@ -47,19 +47,13 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         UI/Component/Label.hpp
         Bullet/LaserBullet.cpp
         Bullet/LaserBullet.hpp
-        Turret/LaserTurret.cpp
-        Turret/LaserTurret.hpp
         Engine/LOG.cpp
         Engine/LOG.hpp
         Scene/LoseScene.cpp
         Scene/LoseScene.hpp
-        Turret/MachineGunTurret.cpp
-        Turret/MachineGunTurret.hpp
         main.cpp
         Bullet/MissileBullet.cpp
         Bullet/MissileBullet.hpp
-        Turret/MissileTurret.cpp
-        Turret/MissileTurret.hpp
         UI/Animation/Plane.cpp
         UI/Animation/Plane.hpp
         Enemy/PlaneEnemy.cpp
@@ -80,10 +74,6 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/StageSelectScene.hpp
         Enemy/TankEnemy.cpp
         Enemy/TankEnemy.hpp
-        Turret/Turret.cpp
-        Turret/Turret.hpp
-        Turret/TurretButton.cpp
-        Turret/TurretButton.hpp
         Scene/WinScene.cpp
         Scene/WinScene.hpp
 
@@ -102,8 +92,6 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/ScoreboardScene.cpp
         Scene/TextInput.cpp
         Scene/TextInput.hpp
-        Turret/FourthTurret.cpp
-        Turret/FourthTurret.hpp
         Bullet/FourthBullet.cpp
         Bullet/FourthBullet.hpp
         Enemy/FourthEnemy.cpp
@@ -112,12 +100,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/CharacterSelectScene.hpp
         Player/Player.cpp
         Player/Player.hpp
-        Weapon/Weapon.cpp
-        Weapon/Weapon.hpp
-        Player/Type1Player.cpp
-        Player/Type1Player.hpp
-        Weapon/MeleeWeapon.cpp
-        Weapon/MeleeWeapon.hpp
+        Player/Wolf.cpp
+        Player/Wolf.hpp
         #        UI/Component/TextInput.cpp
 #        UI/Component/TextInput.hpp
 )

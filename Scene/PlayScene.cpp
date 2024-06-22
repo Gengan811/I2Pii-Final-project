@@ -20,7 +20,7 @@
 #include "Engine/LOG.hpp"
 #include "Engine/Resources.hpp"
 #include "PlayScene.hpp"
-#include "Player/Type1Player.hpp"
+#include "Player/Wolf.hpp"
 #include "Scene/ScoreboardScene.hpp"
 #include "Scene/WinScene.hpp"
 #include "Turret/FourthTurret.hpp"
@@ -32,7 +32,7 @@
 #include "UI/Animation/Plane.hpp"
 #include "UI/Component/Label.hpp"
 
-bool PlayScene::DebugMode = false;
+bool PlayScene::DebugMode = true;
 const std::vector<Engine::Point> PlayScene::directions = {
     Engine::Point(-1, 0), Engine::Point(0, -1), Engine::Point(1, 0),
     Engine::Point(0, 1)};
@@ -123,11 +123,6 @@ void PlayScene::Draw() const {
 }
 void PlayScene::OnKeyDown(int keyCode) {
     IScene::OnKeyDown(keyCode);
-    if (keyCode == ALLEGRO_KEY_W) {
-    } else if (keyCode == ALLEGRO_KEY_S) {
-    } else if (keyCode == ALLEGRO_KEY_A) {
-    } else if (keyCode == ALLEGRO_KEY_D) {
-    }
 }
 int PlayScene::GetMoney() const {
     return money;
@@ -215,7 +210,7 @@ void PlayScene::ConstructUI() {
 
     switch (CharacterId) {
         case 1:
-            AddNewObject(player = new Type1Player(0, 50));
+            AddNewControlObject(player = new Wolf(0, 50));
             break;
 
         default:

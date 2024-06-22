@@ -6,6 +6,7 @@
 
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
+#include "Player/Player.hpp"
 
 class Bullet;
 class PlayScene;
@@ -23,7 +24,7 @@ protected:
     float SlowDownTimeRemaining;
 public:
 	float reachEndTime;
-	std::list<Turret*> lockedTurrets;
+	std::list<Player*> lockedPlayer;
 	std::list<Bullet*> lockedBullets;
 	Enemy(std::string img, float x, float y, float radius, float speed, float hp, int money);
  	void Hit(float damage);
