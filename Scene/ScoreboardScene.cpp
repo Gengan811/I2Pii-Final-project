@@ -11,13 +11,14 @@
 #include "UI/Component/Label.hpp"
 #include "PlayScene.hpp"
 #include "Engine/Point.hpp"
-#include "Scoreboard.h"
+#include "Scene/ScoreboardScene.hpp"
 #include <fstream>
 #include <iostream>
 int page = 1,members=0,w,h,halfW,halfH;
 std::multimap <int,std::string> scoremap;
 std::multimap<int,std::string> datetime;
-void Scoreboard::Listout(int page,std::multimap <int,std::string> scoremap, std::multimap<int,std::string> datetime){
+
+void ScoreboardScene::Listout(int page,std::multimap <int,std::string> scoremap, std::multimap<int,std::string> datetime){
 
     AddNewObject(MemberGroup = new Engine::Group());
     MemberGroup->AddNewObject(new Engine::Label("Name", "WenQuanYi Bitmap Song 14px.ttf", 60, 200, halfH / 4 + 100, 255, 255, 255, 250, 0.5, 0.5));
@@ -39,7 +40,7 @@ void Scoreboard::Listout(int page,std::multimap <int,std::string> scoremap, std:
 
 }
 
-void Scoreboard::Initialize() {
+void ScoreboardScene::Initialize() {
     page =1;
     members = 0;
     w = Engine::GameEngine::GetInstance().GetScreenSize().x;
@@ -51,16 +52,16 @@ void Scoreboard::Initialize() {
     AddNewObject(new Engine::Label("Scoreboard", "GenJyuuGothic-Regular.ttf", 90, halfW, halfH / 8 + 50, 254, 67, 100, 255, 0.5, 0.5));
     AddNewObject(new Engine::Image("stage-select/dirt.png", 50, halfH / 8 + 100, halfW+700, halfH+100));
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 700, halfH * 3 / 2 +100 , 400, 100);
-    btn->SetOnClickCallback(std::bind(&Scoreboard::PrevOnClick, this));
+    btn->SetOnClickCallback(std::bind(&ScoreboardScene::PrevOnClick, this));
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("Prev", "Mamelon-4-Hi-Regular.otf", 60, halfW -500, halfH * 3 / 2 +160, 255, 255, 255, 250, 0.5, 0.5));
 
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW+300, halfH * 3 / 2 + 100, 400, 100);
-    btn->SetOnClickCallback(std::bind(&Scoreboard::NextOnClick, this));
+    btn->SetOnClickCallback(std::bind(&ScoreboardScene::NextOnClick, this));
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("Next", "Mamelon-4-Hi-Regular.otf", 60, halfW+500, halfH * 3 / 2 +160, 255, 255, 255, 250, 0.5, 0.5));
     btn = new Engine::ImageButton("stage-select/home.png", "stage-select/home-1.png", w - 150, 50, 100, 100);
-    btn->SetOnClickCallback(std::bind(&Scoreboard::HomeOnClick, this,1));
+    btn->SetOnClickCallback(std::bind(&ScoreboardScene::HomeOnClick, this,1));
     AddNewControlObject(btn);
     scoremap.clear();
     datetime.clear();
@@ -81,24 +82,24 @@ void Scoreboard::Initialize() {
     bgmInstance = AudioHelper::PlaySample("scoreboard_music.ogg", true, AudioHelper::BGMVolume);
 
 }
-void Scoreboard::HomeOnClick(int stage) const {
+void ScoreboardScene::HomeOnClick(int stage) const {
     MemberGroup->Clear();
     Engine::GameEngine::GetInstance().ChangeScene("start");
 }
-void Scoreboard::PrevOnClick() {
+void ScoreboardScene::PrevOnClick() {
     MemberGroup->Clear();
     if(page>1)
         page--;
     Listout(page,scoremap,datetime);
 }
-void Scoreboard::NextOnClick() {
+void ScoreboardScene::NextOnClick() {
     MemberGroup->Clear();
     if(members-page*5>0)
         page++;
     Listout(page,scoremap,datetime);
 }
 
-void Scoreboard::Terminate() {
+void ScoreboardScene::Terminate() {
     AudioHelper::StopSample(bgmInstance);
     bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
     IScene::Terminate();

@@ -30,11 +30,18 @@ class Player : public Engine::Image {
    public:
     std::list<Turret*> lockedTurrets;
     std::list<Bullet*> lockedBullets;
-    explicit Player(std::string img, float x, float y, float w = 0, float h = 0, float anchorX = 0.5f, float anchorY = 0.5f,
-    float rotation = 0, float vx = 0, float vy = 0, unsigned char r = 255, unsigned char g = 255, unsigned char b = 255, unsigned char a = 255);
-		
+    explicit Player(std::string img,
+                    float x,
+                    float y,
+                    float w = 0,
+                    float h = 0,
+                    float anchorX = 0.5f,
+                    float anchorY = 0.5f,
+                    float rotation = 0);
+
     void Hit(float damage);
     void Update(float deltaTime) override;
     void Draw() const override;
+    void OnKeyDown(int keyCode);
 };
 #endif  // INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_PLAYER_HPP

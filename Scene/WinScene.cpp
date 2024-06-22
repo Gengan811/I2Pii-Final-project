@@ -13,7 +13,7 @@
 #include "PlayScene.hpp"
 #include "Engine/Point.hpp"
 #include "WinScene.hpp"
-#include "ScoreBoardScene.hpp"
+#include "ScoreboardScene.hpp"
 #include "Engine/IScene.hpp"
 
 using Engine::LOG;

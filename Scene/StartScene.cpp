@@ -6,7 +6,7 @@
 #include "UI/Component/Image.hpp"
 #include "UI/Component/ImageButton.hpp"
 #include "UI/Component/Label.hpp"
-#include "StartScene.h"
+#include "StartScene.hpp"
 #include "PlayScene.hpp"
 #include "Engine/Point.hpp"
 
@@ -31,9 +31,6 @@ void StartScene::Initialize() {
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("設置", "GenYoGothic-N.ttc", 60, halfW, halfH * 3 / 2, 255, 255, 255, 250, 0.5, 0.5));
 
-    btn = new Engine::ImageButton("start/question_on.png", "start/question.png", w-100, h-100, 100, 100);
-    btn->SetOnClickCallback(std::bind(&StartScene::EasterEggOnClick, this, 1));
-    AddNewControlObject(btn);
     bgmInstance = AudioHelper::PlaySample("If_I_can_stop_one_heart_from_breaking.ogg", true, AudioHelper::BGMVolume);
 
 }
@@ -47,7 +44,4 @@ void StartScene::PlayOnClick(int stage) {
 }
 void StartScene::SettingsOnClick(int stage) {
     Engine::GameEngine::GetInstance().ChangeScene("settings");
-}
-void StartScene::EasterEggOnClick(int stage) {
-    Engine::GameEngine::GetInstance().ChangeScene("easteregg");
 }

@@ -21,7 +21,7 @@
 #include "Engine/Resources.hpp"
 #include "PlayScene.hpp"
 #include "Player/Type1Player.hpp"
-#include "Scene/ScoreBoardScene.hpp"
+#include "Scene/ScoreboardScene.hpp"
 #include "Scene/WinScene.hpp"
 #include "Turret/FourthTurret.hpp"
 #include "Turret/LaserTurret.hpp"

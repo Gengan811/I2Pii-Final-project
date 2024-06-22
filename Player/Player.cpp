@@ -27,13 +27,13 @@ PlayScene* Player::getPlayScene() {
 Player::Player(std::string img,
                float x,
                float y,
-               float radius,
-               float speed,
-               float hp,
-               int money)
-    : Engine::Image(img, x, y), hp(hp) {
-    CollisionRadius = radius;
-}
+               float w,
+               float h,
+               float anchorX,
+               float anchorY,
+               float rotation)
+    : Image::Image(img, x, y, w, h, anchorX, anchorY) {}
+
 void Player::Hit(float damage) {
     hp -= damage;
     if (hp <= 0) {
@@ -50,10 +50,10 @@ void Player::Hit(float damage) {
 
 void Player::Update(float deltaTime) {
     // Pre-calculate the velocity.
-    Sprite::Update(deltaTime);
+    Image::Update(deltaTime);
 }
 
-void Player::OnKeyDown() {
+void Player::OnKeyDown(int keyCode) {
     if (keyCode == ALLEGRO_KEY_W) {
         y--;
     } else if (keyCode == ALLEGRO_KEY_S) {
@@ -64,9 +64,9 @@ void Player::OnKeyDown() {
         x++;
     }
 }
-}
+
 void Player::Draw() const {
-    Sprite::Draw();
+    Image::Draw();
     if (PlayScene::DebugMode) {
         // Draw collision radius.
         al_draw_circle(Position.x, Position.y, CollisionRadius,

@@ -6,9 +6,9 @@
 #include "Scene/CharacterSelectScene.hpp"
 #include "Scene/LoseScene.hpp"
 #include "Scene/PlayScene.hpp"
-#include "Scene/ScoreBoardScene.hpp"
+#include "Scene/ScoreboardScene.hpp"
 #include "Scene/StageSelectScene.hpp"
-#include "Scene/StartScene.h"
+#include "Scene/StartScene.hpp"
 #include "Scene/WinScene.hpp"
 
 int main(int argc, char** argv) {
@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     game.AddNewScene("stage-select", new StageSelectScene());
     game.AddNewScene("character-select", new CharacterSelectScene());
     game.AddNewScene("start", new StartScene());
-    game.AddNewScene("scoreboard-scene", new ScoreBoardScene());
+    game.AddNewScene("scoreboard-scene", new ScoreboardScene());
 
     game.Start("start", 60, 1600, 832);
     return 0;
