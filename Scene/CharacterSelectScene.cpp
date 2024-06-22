@@ -10,11 +10,11 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
-#include "UI/Component/ImageButton.hpp"
-#include "UI/Component/Label.hpp"
-#include "PlayScene.hpp"
 #include "Engine/Point.hpp"
 #include "Engine/Resources.hpp"
+#include "PlayScene.hpp"
+#include "UI/Component/ImageButton.hpp"
+#include "UI/Component/Label.hpp"
 #include "UI/Component/Slider.hpp"
 
 void CharacterSelectScene::Initialize() {
@@ -24,20 +24,34 @@ void CharacterSelectScene::Initialize() {
     int halfH = h / 2;
     Engine::ImageButton* btn;
 
-    AddNewObject(new Engine::Label("!! Choose Your Hero !!", "pirulen.ttf", 120, halfW, halfH / 3 + 50, 10, 255, 255, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("!! Choose Your Hero !!", "pirulen.ttf", 80,
+                                   halfW, halfH / 3, 10, 255, 255, 255, 0.5,
+                                   0.5));
 
-    btn = new Engine::ImageButton("character/sliver-wolf.png", "stage-select/sliver-wolf.png", halfW - 250, halfH / 2, 400, 100);
-    btn->SetOnClickCallback(std::bind(&CharacterSelectScene::PlayOnClick, this, 1));
+    btn =
+        new Engine::ImageButton("play/sliver-wolf.png", "play/sliver-wolf.png",
+                                halfW - 450, halfH / 2, 350, 350);
+    btn->SetOnClickCallback(
+        std::bind(&CharacterSelectScene::PlayOnClick, this, 1));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("銀狼", "pirulen.ttf", 48, halfW - 50, halfH / 2 + 200, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("Sliver wolf", "pirulen.ttf", 32, halfW - 325,
+                                   halfH / 2 + 500, 255, 255, 255, 255, 0.5,
+                                   0.5));
 
-    btn = new Engine::ImageButton("stage-select/super-brother.png", "stage-select/super-brother.png", halfW - 150, halfH /2, 400, 100);
-    btn->SetOnClickCallback(std::bind(&CharacterSelectScene::PlayOnClick, this, 2));
+    btn = new Engine::ImageButton("play/super-brother.png",
+                                  "play/super-brother.png", halfW + 100,
+                                  halfH / 2, 350, 350);
+    btn->SetOnClickCallback(
+        std::bind(&CharacterSelectScene::PlayOnClick, this, 2));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("超哥", "pirulen.ttf", 48, halfW + 50, halfH / 2 + 100, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("Super brother", "pirulen.ttf", 32,
+                                   halfW + 275, halfH / 2 + 500, 255, 255, 255,
+                                   255, 0.5, 0.5));
 
-    // Not safe if release resource while playing, however we only free while change scene, so it's fine.
-    bgmInstance = AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume);
+    // Not safe if release resource while playing, however we only free while
+    // change scene, so it's fine.
+    bgmInstance =
+        AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume);
 }
 void CharacterSelectScene::Terminate() {
     AudioHelper::StopSample(bgmInstance);
@@ -48,7 +62,8 @@ void CharacterSelectScene::BackOnClick(int stage) {
     Engine::GameEngine::GetInstance().ChangeScene("start");
 }
 void CharacterSelectScene::PlayOnClick(int character_id) {
-    PlayScene* scene = dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetScene("play"));
-    scene->character = character_id;
+    PlayScene* scene = dynamic_cast<PlayScene*>(
+        Engine::GameEngine::GetInstance().GetScene("play"));
+    scene->CharacterId = character_id;
     Engine::GameEngine::GetInstance().ChangeScene("play");
 }

@@ -17,7 +17,7 @@ public:
     void Update(float deltaTime) override;
     void BackOnClick(int stage);
     void SaveOnClick(int stage);
-    void OnKeyDown(int keycode);
+    void OnKeyDown(int keycode) override;
     std::string GetCurrentDateTime();
 };
 

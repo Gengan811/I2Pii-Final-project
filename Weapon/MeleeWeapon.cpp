@@ -9,7 +9,7 @@
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/Group.hpp"
-#include "Bullet/MeleeBullet.hpp"
+// #include "Bullet/MeleeBullet.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Engine/Point.hpp"
 
@@ -23,7 +23,7 @@ void MeleeWeapon::CreateBullet() {
     Engine::Point normalized = diff.Normalize();
     Engine::Point normal = Engine::Point(-normalized.y, normalized.x);
     // Change bullet position to the front of the gun barrel.
-    getPlayScene()->BulletGroup->AddNewObject(new MeleeBullet(Position + normalized * 10 - normal * 6, diff, rotation, this));
-    getPlayScene()->BulletGroup->AddNewObject(new MeleeBullet(Position + normalized * 10 + normal * 6, diff, rotation, this));
-    AudioHelper::PlayAudio("missile.wav");
+    // getPlayScene()->BulletGroup->AddNewObject(new MeleeBullet(Position + normalized * 10 - normal * 6, diff, rotation, this));
+    // getPlayScene()->BulletGroup->AddNewObject(new MeleeBullet(Position + normalized * 10 + normal * 6, diff, rotation, this));
+    // AudioHelper::PlayAudio("missile.wav");
 }

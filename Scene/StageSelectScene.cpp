@@ -38,6 +38,8 @@ void StageSelectScene::Initialize() {
     btn->SetOnClickCallback(std::bind(&StageSelectScene::PlayOnClick, this, 3));
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("Stage 3", "pirulen.ttf", 48, halfW, halfH / 2 + 300, 0, 0, 0, 255, 0.5, 0.5));
+    
+    bgmInstance = AudioHelper::PlaySample("select.ogg", true, AudioHelper::BGMVolume);
 }
 void StageSelectScene::Terminate() {
 	AudioHelper::StopSample(bgmInstance);

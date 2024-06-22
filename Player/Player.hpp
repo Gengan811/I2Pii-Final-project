@@ -5,8 +5,8 @@
 #ifndef INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_PLAYER_HPP
 #define INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_PLAYER_HPP
 #include <list>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
@@ -15,22 +15,26 @@ class Bullet;
 class PlayScene;
 class Turret;
 
-class Player : public Engine::Sprite {
-protected:
+class Player : public Engine::Image {
+   protected:
     std::vector<Engine::Point> path;
-    float speed;
     float hp;
-    int money;
+    int x, y;
+    float Rotation;
+    // Color tint.
+    ALLEGRO_COLOR Tint;
+    // Assume a circle is a good approximation of the sprite's boundary.
+    float CollisionRadius = 0;
     PlayScene* getPlayScene();
-    virtual void OnExplode();
-public:
-    float reachEndTime;
+
+   public:
     std::list<Turret*> lockedTurrets;
     std::list<Bullet*> lockedBullets;
-    Player(std::string img, float x, float y, float radius, float speed, float hp, int money);
+    explicit Player(std::string img, float x, float y, float w = 0, float h = 0, float anchorX = 0.5f, float anchorY = 0.5f,
+    float rotation = 0, float vx = 0, float vy = 0, unsigned char r = 255, unsigned char g = 255, unsigned char b = 255, unsigned char a = 255);
+		
     void Hit(float damage);
-    void UpdatePath(const std::vector<std::vector<int>>& mapDistance);
     void Update(float deltaTime) override;
     void Draw() const override;
 };
-#endif //INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_PLAYER_HPP
+#endif  // INC_2024_I2P2_TOWERDEFENSE_WITH_ANSWER_PLAYER_HPP

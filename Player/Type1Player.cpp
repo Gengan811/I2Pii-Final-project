@@ -4,4 +4,4 @@
 
 #include "Type1Player.hpp"
 
-Type1Player::Type1Player(int x, int y) : Player("play/enemy-1.png", x, y, 10, 50, 5, 5) {}
+Type1Player::Type1Player(int x, int y) : Player("play/enemy-2.png", x, y, 10, 50, 5, 5) {}

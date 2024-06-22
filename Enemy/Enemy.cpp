@@ -108,7 +108,7 @@ void Enemy::Update(float deltaTime) {
 		if (path.empty()) {
 			// Reach end point.
 			Hit(hp);
-			getPlayScene()->Hit();
+			// getPlayScene()->Hit();
 			reachEndTime = 0;
 			return;
 		}

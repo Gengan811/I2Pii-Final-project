@@ -19,8 +19,8 @@
 PlayScene* Weapon::getPlayScene() {
     return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-Weapon::Weapon(std::string imgBase, std::string imgTurret, float x, float y, float radius, int price, float coolDown) :
-        Sprite(imgTurret, x, y), price(price), coolDown(coolDown), imgBase(imgBase, x, y) {
+Weapon::Weapon(std::string imgBase, std::string imgTurret, float x, float y, float radius, float coolDown) :
+        Sprite(imgTurret, x, y), price(0), coolDown(coolDown), imgBase(imgBase, x, y) {
     CollisionRadius = radius;
 }
 void Weapon::Update(float deltaTime) {

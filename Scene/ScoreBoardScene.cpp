@@ -58,7 +58,7 @@ void ScoreBoardScene::Terminate() {
 }
 
 void ScoreBoardScene::BackOnClick(int stage) {
-    Engine::GameEngine::GetInstance().ChangeScene("stage-select");
+    Engine::GameEngine::GetInstance().ChangeScene("start");
 }
 
 void ScoreBoardScene::PrevPageOnClick(int stage) {

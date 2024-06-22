@@ -8,6 +8,7 @@
 
 #include "Engine/IScene.hpp"
 #include "Engine/Point.hpp"
+#include "Player/Player.hpp"
 
 class Turret;
 namespace Engine {
@@ -29,7 +30,6 @@ private:
 protected:
 	int lives;
 	int money;
-	int SpeedMult;
 public:
     static bool DebugMode;
 	static const std::vector<Engine::Point> directions;
@@ -52,6 +52,7 @@ public:
 	Group* EnemyGroup;
 	Group* EffectGroup;
 	Group* UIGroup;
+	Player *player;
 	Engine::Label* UIMoney;
 	Engine::Label* UILives;
 	Engine::Image* imgTarget;

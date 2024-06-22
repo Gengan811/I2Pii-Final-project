@@ -1,0 +1,5 @@
+cmake-build-debug
+.vscode
+build
+.DS_Store
+log.txt
