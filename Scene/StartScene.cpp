@@ -1,22 +1,15 @@
-//
-// Created by Hsuan on 2024/4/10.
-//
-
-#include "StartScene.h"
-#include <allegro5/allegro_audio.h>
 #include <functional>
-#include <memory>
 #include <string>
 
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
+#include "UI/Component/Image.hpp"
 #include "UI/Component/ImageButton.hpp"
 #include "UI/Component/Label.hpp"
+#include "StartScene.h"
 #include "PlayScene.hpp"
 #include "Engine/Point.hpp"
-#include "Engine/Resources.hpp"
-#include "UI/Component/Slider.hpp"
-#include "Scene/StartScene.h"
+
 
 void StartScene::Initialize() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
@@ -24,25 +17,37 @@ void StartScene::Initialize() {
     int halfW = w / 2;
     int halfH = h / 2;
     Engine::ImageButton* btn;
+    AddNewObject(new Engine::Image("start/Beginning_Scene_Of_Tower.png", 0, 0, w, h));
+    AddNewObject(new Engine::Label("新‧窮鐵道", "ChenYuluoyan-Thin-Monospaced.ttf", 175, halfW-250, halfH / 3 + 100, 220, 190, 30, 255, 0.5, 0.5));
 
-    AddNewObject(new Engine::Label("Archero", "pirulen.ttf", 120, halfW, halfH / 3 + 50, 10, 255, 255, 255, 0.5, 0.5));
 
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH / 2 + 200 , 400, 100);
     btn->SetOnClickCallback(std::bind(&StartScene::PlayOnClick, this, 1));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Play", "pirulen.ttf", 48, halfW, halfH / 2 + 250, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("開始遊戲", "GenYoGothic-N.ttc", 60, halfW, halfH / 2 + 250, 255, 255, 255, 250, 0.5, 0.5));
 
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW - 200, halfH * 3 / 2 - 50, 400, 100);
-    btn->SetOnClickCallback(std::bind(&StartScene::ScoreBoardOnClick, this, 2));
+    btn->SetOnClickCallback(std::bind(&StartScene::SettingsOnClick, this, 2));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Scoreboard", "pirulen.ttf", 48, halfW, halfH * 3 / 2, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("設置", "GenYoGothic-N.ttc", 60, halfW, halfH * 3 / 2, 255, 255, 255, 250, 0.5, 0.5));
+
+    btn = new Engine::ImageButton("start/question_on.png", "start/question.png", w-100, h-100, 100, 100);
+    btn->SetOnClickCallback(std::bind(&StartScene::EasterEggOnClick, this, 1));
+    AddNewControlObject(btn);
+    bgmInstance = AudioHelper::PlaySample("If_I_can_stop_one_heart_from_breaking.ogg", true, AudioHelper::BGMVolume);
+
 }
 void StartScene::Terminate() {
+    AudioHelper::StopSample(bgmInstance);
+    bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
     IScene::Terminate();
 }
 void StartScene::PlayOnClick(int stage) {
     Engine::GameEngine::GetInstance().ChangeScene("stage-select");
 }
-void StartScene::ScoreBoardOnClick(int stage) {
-    Engine::GameEngine::GetInstance().ChangeScene("scoreboard-scene");
+void StartScene::SettingsOnClick(int stage) {
+    Engine::GameEngine::GetInstance().ChangeScene("settings");
+}
+void StartScene::EasterEggOnClick(int stage) {
+    Engine::GameEngine::GetInstance().ChangeScene("easteregg");
 }
