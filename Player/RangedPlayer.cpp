@@ -19,7 +19,7 @@ PlayScene* RangedPlayer::getPlayScene() {
         Engine::GameEngine::GetInstance().GetActiveScene());
 }
 RangedPlayer::RangedPlayer(std::string imgBase,
-                           std::string imgTurret,
+                           std::string imgBullet,
                            float x,
                            float y,
                            float radius,

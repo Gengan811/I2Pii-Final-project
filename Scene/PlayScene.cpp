@@ -19,7 +19,6 @@
 #include "PlayScene.hpp"
 #include "Player/Wolf.hpp"
 #include "Scene/ScoreboardScene.hpp"
-#include "Scene/WinScene.hpp"
 #include "Turret/FourthTurret.hpp"
 #include "Turret/LaserTurret.hpp"
 #include "Turret/MachineGunTurret.hpp"
@@ -33,7 +32,7 @@ bool PlayScene::DebugMode = true;
 const std::vector<Engine::Point> PlayScene::directions = {
     Engine::Point(-1, 0), Engine::Point(0, -1), Engine::Point(1, 0),
     Engine::Point(0, 1)};
-const int PlayScene::MapWidth = 20, PlayScene::MapHeight = 13;
+const int PlayScene::MapWidth = 25, PlayScene::MapHeight = 13;
 const int PlayScene::BlockSize = 64;
 const float PlayScene::DangerTime = 7.61;
 const Engine::Point PlayScene::SpawnGridPoint = Engine::Point(-1, 0);
@@ -53,6 +52,11 @@ void PlayScene::Initialize() {
     // TODO: [HACKATHON-3-BUG] (2/5): Find out the cheat code to test.
     // TODO: [HACKATHON-3-BUG] (2/5): It should generate a Plane, and add 10000
     // to the money, but it doesn't work now.
+    int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
+    int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
+    AddNewObject(new Engine::Image(
+        std::string("play/background/Scene") + std::to_string(MapId) + ".png",
+        0, 0, w, h));
     mapState.clear();
     keyStrokes.clear();
     ticks = 0;
@@ -71,11 +75,10 @@ void PlayScene::Initialize() {
     AddNewControlObject(UIGroup = new Group());
 
     ConstructUI();
-    mapDistance = CalculateBFSDistance();
+    CalculateBFSDistance();
     // Preload Lose Scene
     deathBGMInstance =
         Engine::Resources::GetInstance().GetSampleInstance("astronomia.ogg");
-    Engine::Resources::GetInstance().GetBitmap("lose/benjamin-happy.png");
     // Start BGM.
     bgmId = AudioHelper::PlayBGM("play.ogg");
 }
@@ -92,13 +95,10 @@ void PlayScene::Update(float deltaTime) {
         if (lives <= 0)
             Engine::GameEngine::GetInstance().ChangeScene("lose-scene");
         else {
-            WinScene* scene = dynamic_cast<WinScene*>(
-                Engine::GameEngine::GetInstance().GetScene("win"));
-            scene->FinalScore = lives * money / 100;
+            FinalScore = lives * money / 100;
             Engine::GameEngine::GetInstance().ChangeScene("win");
         }
     }
-    player->Update(deltaTime);
 }
 
 void PlayScene::Draw() const {
@@ -131,10 +131,6 @@ void PlayScene::EarnMoney(int money) {
     UIMoney->Text = std::string("$") + std::to_string(this->money);
 }
 
-void PlayScene::SetupLevel() {
-    ReadMap();
-    ReadEnemy();
-}
 void PlayScene::ReadMap() {
     std::string filename =
         std::string("Resource/map") + std::to_string(MapId) + ".txt";
@@ -166,6 +162,8 @@ void PlayScene::ReadMap() {
     // Store map in 2d array.
     mapState = std::vector<std::vector<TileType>>(
         MapHeight, std::vector<TileType>(MapWidth));
+    mapDistance = std::vector<std::vector<int>>(MapHeight,
+                                                std::vector<int>(MapWidth, -1));
     for (int i = 0; i < MapHeight; i++) {
         for (int j = 0; j < MapWidth; j++) {
             const int num = mapData[i * MapWidth + j];
@@ -178,10 +176,6 @@ void PlayScene::ReadMap() {
     }
 }
 void PlayScene::ReadEnemy() {
-    // TODO: [HACKATHON-3-BUG] (3/5): Trace the code to know how the enemies are
-    // created.
-    // TODO: [HACKATHON-3-BUG] (3/5): There is a bug in these files, which let
-    // the game only spawn the first enemy, try to fix it.
     std::string filename =
         std::string("Resource/enemy") + std::to_string(MapId) + ".txt";
     // Read enemy file.
@@ -190,7 +184,9 @@ void PlayScene::ReadEnemy() {
     while (fin >> type && fin >> x && fin >> y) {
         switch (type) {
             case 1:
-                EnemyGroup->AddNewObject(new SoldierEnemy(x, y));
+                EnemyGroup->AddNewObject(
+                    new SoldierEnemy(BlockSize / 2 + BlockSize * x,
+                                     BlockSize / 2 + BlockSize * y));
                 break;
 
             default:
@@ -202,11 +198,9 @@ void PlayScene::ReadEnemy() {
 void PlayScene::ConstructUI() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
-    AddNewObject(new Engine::Image(
-        std::string("play/background/Scene") + std::to_string(MapId) + ".png",
-        0, 0, w, h));
-    ReadMap();
     ReadEnemy();
+    ReadMap();
+    // AddNewObject(new SoldierEnemy(50, 50));
     switch (CharacterId) {
         case 1:
             AddNewControlObject(player =
@@ -219,43 +213,14 @@ void PlayScene::ConstructUI() {
     }
 }
 
-bool PlayScene::CheckSpaceValid(int x, int y) {
-    if (x < 0 || x >= MapWidth || y < 0 || y >= MapHeight)
-        return false;
-    auto map00 = mapState[y][x];
-    mapState[y][x] = TILE_OBSTACLE;
-    std::vector<std::vector<int>> map = CalculateBFSDistance();
-    mapState[y][x] = map00;
-    if (map[0][0] == -1)
-        return false;
-    for (auto& it : EnemyGroup->GetObjects()) {
-        Engine::Point pnt;
-        pnt.x = floor(it->Position.x / BlockSize);
-        pnt.y = floor(it->Position.y / BlockSize);
-        if (pnt.x < 0)
-            pnt.x = 0;
-        if (pnt.x >= MapWidth)
-            pnt.x = MapWidth - 1;
-        if (pnt.y < 0)
-            pnt.y = 0;
-        if (pnt.y >= MapHeight)
-            pnt.y = MapHeight - 1;
-        if (map[pnt.y][pnt.x] == -1)
-            return false;
-    }
-    // All enemy have path to exit.
-    mapState[y][x] = TILE_OBSTACLE;
-    mapDistance = map;
-    return true;
-}
-std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
-    std::vector<std::vector<int>> map(
-        MapHeight, std::vector<int>(std::vector<int>(MapWidth, -1)));
+void PlayScene::CalculateBFSDistance() {
     std::queue<Engine::Point> que;
     int x = static_cast<int>(floor(player->Position.x / PlayScene::BlockSize));
     int y = static_cast<int>(floor(player->Position.y / PlayScene::BlockSize));
     que.push(Engine::Point(x, y));
-    map[y][x] = 0;
+    mapDistance = std::vector<std::vector<int>>(MapHeight,
+                                                std::vector<int>(MapWidth, -1));
+    mapDistance[y][x] = 0;
     while (!que.empty()) {
         Engine::Point p = que.front();
         que.pop();
@@ -264,12 +229,11 @@ std::vector<std::vector<int>> PlayScene::CalculateBFSDistance() {
             if (next.x < 0 || next.x >= MapWidth || next.y < 0 ||
                 next.y >= MapHeight)
                 continue;
-            if (map[next.y][next.x] == -1 ||
+            if (mapDistance[next.y][next.x] != -1 ||
                 mapState[next.y][next.x] != TILE_EMPTY)
                 continue;
-            map[next.y][next.x] = map[p.y][p.x] + 1;
+            mapDistance[next.y][next.x] = mapDistance[p.y][p.x] + 1;
             que.push(next);
         }
     }
-    return map;
 }

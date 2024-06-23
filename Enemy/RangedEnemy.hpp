@@ -21,7 +21,7 @@ class RangedEnemy : public Enemy {
 
    public:
     RangedEnemy(std::string imgBase,
-                std::string imgTurret,
+                std::string imgBullet,
                 float x,
                 float y,
                 float radius,

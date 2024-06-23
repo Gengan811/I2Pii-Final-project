@@ -2,23 +2,23 @@
 #define WINSCENE_HPP
 #include <allegro5/allegro_audio.h>
 #include "Engine/IScene.hpp"
+#include "UI/Component/Label.hpp"
 
 class WinScene final : public Engine::IScene {
-private:
+   private:
     float ticks;
     ALLEGRO_SAMPLE_ID bgmId;
-    std::string UserInput;
-public:
-    int FinalScore;
-    Group* NameGroup;
+
+   public:
     explicit WinScene() = default;
     void Initialize() override;
     void Terminate() override;
     void Update(float deltaTime) override;
     void BackOnClick(int stage);
-    void SaveOnClick(int stage);
-    void OnKeyDown(int keycode) override;
-    std::string GetCurrentDateTime();
+    void BarOnClick();
+    Group* TextGroup;
+    void OnKeyDown(int keyCode) override;
+    Engine::Label* line;
 };
 
-#endif // WINSCENE_HPP
+#endif  // WINSCENE_HPP

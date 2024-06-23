@@ -20,7 +20,7 @@ class RangedPlayer : public Player {
 
    public:
     RangedPlayer(std::string imgBase,
-                std::string imgTurret,
+                std::string imgBullet,
                 float x,
                 float y,
                 float radius,

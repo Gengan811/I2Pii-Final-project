@@ -20,6 +20,7 @@ protected:
 	virtual void OnExplode();
     float OriginalSpeed;
     float SlowDownTimeRemaining;
+    Engine::Point TargetPosition;
 public:
 	std::list<Sprite*> lockedPlayer;
 	std::list<Bullet*> lockedBullets;

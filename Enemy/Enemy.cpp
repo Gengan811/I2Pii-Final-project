@@ -42,10 +42,14 @@ Enemy::Enemy(std::string img,
              float speed,
              float hp,
              int money)
-    : Engine::Sprite(img, x, y), speed(speed), hp(hp), money(money) {
+    : Engine::Sprite(img, x, y, radius * 2, radius * 2),
+      speed(speed),
+      hp(hp),
+      money(money) {
     CollisionRadius = radius;
     OriginalSpeed = speed;
     SlowDownTimeRemaining = 0;
+    TargetPosition = Position;
 }
 void Enemy::Hit(float damage) {
     hp -= damage;
@@ -69,18 +73,22 @@ void Enemy::ApplySlowDown(float factor, float duration) {
     SlowDownTimeRemaining = duration;
 }
 
-Engine::Point findNextStep(PlayScene* scene,
-                           int start_x,
-                           int start_y,
-                           int num) {
+Engine::Point findNextStep(PlayScene* scene, Engine::Point Position) {
+    int start_x = static_cast<int>(floor(Position.x / PlayScene::BlockSize));
+    int start_y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
+    int x, y, num = scene->mapDistance[start_y][start_x];
     for (auto& dir : PlayScene::directions) {
-        int x = start_x + dir.x;
-        int y = start_y + dir.y;
+        x = start_x + dir.x;
+        y = start_y + dir.y;
         if (x < 0 || x >= PlayScene::MapWidth || y < 0 ||
             y >= PlayScene::MapHeight || scene->mapDistance[y][x] != num - 1)
             continue;
-        return Engine::Point(x, y);
+        return Engine::Point(x, y) * PlayScene::BlockSize +
+               Engine::Point(PlayScene::BlockSize / 2,
+                             PlayScene::BlockSize / 2);
     }
+    return Engine::Point(start_x, start_y) * PlayScene::BlockSize +
+           Engine::Point(PlayScene::BlockSize / 2, PlayScene::BlockSize / 2);
 }
 
 void Enemy::Update(float deltaTime) {
@@ -92,39 +100,41 @@ void Enemy::Update(float deltaTime) {
     }
 
     // Pre-calculate the velocity.
-    int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize));
-    int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
-    Engine::Point pos(x, y);
     float remainSpeed = speed * deltaTime;
+    if (TargetPosition == Position) {
+        TargetPosition = findNextStep(getPlayScene(), Position);
+    }
     while (remainSpeed != 0) {
-        Engine::Point target = findNextStep(getPlayScene(), x, y,
-                                            getPlayScene()->mapDistance[y][x]);
-        if (target == pos) {
+        if (Position == TargetPosition) {
+            Velocity = Engine::Point(0, 0);
             break;
         }
-        Engine::Point vec = target - Position;
+        Engine::Point vec = TargetPosition - Position;
         // Add up the distances:
         // 1. to path.back()
         // 2. path.back() to border
         // 3. All intermediate block size
         // 4. to end point
         Engine::Point normalized = vec.Normalize();
-        if (remainSpeed - vec.Magnitude() > 0) {
-            Position = target;
+        if (remainSpeed > vec.Magnitude()) {
+            Position = TargetPosition;
+            TargetPosition = findNextStep(getPlayScene(), Position);
             remainSpeed -= vec.Magnitude();
         } else {
             Velocity = normalized * remainSpeed / deltaTime;
             remainSpeed = 0;
         }
     }
-    Rotation = atan2(Velocity.y, Velocity.x);
+    if (Velocity.Magnitude() > 1e-3) {
+        Rotation = atan2(Velocity.y, Velocity.x);
+    }
     Sprite::Update(deltaTime);
 }
 void Enemy::Draw() const {
     Sprite::Draw();
     if (PlayScene::DebugMode) {
         // Draw collision radius.
-        al_draw_circle(Position.x, Position.y, 200,
+        al_draw_circle(Position.x, Position.y, CollisionRadius,
                        al_map_rgb(255, 0, 0), 2);
     }
 }

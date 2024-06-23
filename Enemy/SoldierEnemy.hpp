@@ -1,9 +1,14 @@
 #ifndef SOLDIERENEMY_HPP
 #define SOLDIERENEMY_HPP
-#include "Enemy.hpp"
+#include "RangedEnemy.hpp"
+#include "Player/RangedPlayer.hpp"
 
-class SoldierEnemy : public Enemy {
-public:
-	SoldierEnemy(int x, int y);
+
+class SoldierEnemy : public RangedEnemy {
+   public:
+    SoldierEnemy(int x, int y);
+    void Update(float deltaTime) override;
+    void Draw() const override;
+    void CreateBullet() override;
 };
-#endif // SOLDIERENEMY_HPP
+#endif  // SOLDIERENEMY_HPP

@@ -17,7 +17,7 @@ PlayScene* RangedEnemy::getPlayScene() {
         Engine::GameEngine::GetInstance().GetActiveScene());
 }
 RangedEnemy::RangedEnemy(std::string imgBase,
-                         std::string imgTurret,
+                         std::string imgBullet,
                          float x,
                          float y,
                          float radius,
@@ -25,7 +25,7 @@ RangedEnemy::RangedEnemy(std::string imgBase,
                          float cooldown,
                          float hp,
                          int money)
-    : Enemy(imgBase, x, y, radius, speed, hp, money), coolDown(coolDown) {
+    : Enemy(imgBase, x, y, radius, speed, hp, money), coolDown(cooldown) {
     CollisionRadius = radius;
 }
 

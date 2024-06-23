@@ -14,7 +14,7 @@ PlayScene* Bullet::getPlayScene() {
 }
 void Bullet::OnExplode(Enemy* enemy) {
 }
-Bullet::Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Turret* parent) :
+Bullet::Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent) :
 	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent) {
 	Velocity = forwardDirection.Normalize() * speed;
 	Rotation = rotation;

@@ -11,7 +11,7 @@ Wolf::Wolf(int x, int y)
                    x,
                    y,
                    50,
-                   100,
+                   200,
                    5,
                    500) {}
 void Wolf::CreateBullet() {}

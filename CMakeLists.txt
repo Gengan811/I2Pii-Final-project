@@ -85,8 +85,6 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/PlayScene.hpp
         Scene/StageSelectScene.cpp
         Scene/StageSelectScene.hpp
-        Scene/WinScene.cpp
-        Scene/WinScene.hpp
         Scene/ScoreboardScene.hpp
         Scene/ScoreboardScene.cpp
         Scene/TextInput.cpp
@@ -95,6 +93,9 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/CharacterSelectScene.hpp
         Scene/SettingsScene.cpp
         Scene/SettingsScene.hpp
+
+        Bullet/FireBullet.cpp
+        Bullet/FireBullet.hpp
 )
 
 IF (WIN32)

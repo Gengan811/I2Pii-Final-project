@@ -37,6 +37,7 @@ Player::Player(std::string img,
     Position.y = y;
     CollisionRadius = radius;
     TargetPosition = Position;
+    is_moving = false;
 }
 
 void Player::Hit(float damage) {
@@ -54,36 +55,52 @@ void Player::Hit(float damage) {
 }
 
 void Player::Update(float deltaTime) {
-    if (abs(TargetPosition.x - Position.x) < 1 &&
-        abs(TargetPosition.y - Position.y) < 1) {
-        is_moving = false;
-        Position = TargetPosition;
-        Velocity = Engine::Point(0, 0);
+    if (is_moving) {
+        if ((TargetPosition - Position).Magnitude() < speed * deltaTime) {
+            is_moving = false;
+            Position = TargetPosition;
+            Velocity = Engine::Point(0, 0);
+            getPlayScene()->CalculateBFSDistance();
+        } else {
+            getPlayScene();
+        }
+        Sprite::Update(deltaTime);
     }
-    Sprite::Update(deltaTime);
 }
 
 void Player::OnKeyDown(int keyCode) {
     if (is_moving)
         return;
-    is_moving = true;
     if (keyCode == ALLEGRO_KEY_W) {
+        if (Position.y - PlayScene::BlockSize < 0)
+            return;
         Velocity = Engine::Point(0, -speed);
         TargetPosition =
             Engine::Point(Position.x, Position.y - PlayScene::BlockSize);
     } else if (keyCode == ALLEGRO_KEY_S) {
+        if (Position.y + PlayScene::BlockSize >=
+            PlayScene::MapHeight * PlayScene::BlockSize)
+            return;
         Velocity = Engine::Point(0, speed);
         TargetPosition =
             Engine::Point(Position.x, Position.y + PlayScene::BlockSize);
     } else if (keyCode == ALLEGRO_KEY_A) {
+        if (Position.x - PlayScene::BlockSize < 0)
+            return;
         Velocity = Engine::Point(-speed, 0);
         TargetPosition =
             Engine::Point(Position.x - PlayScene::BlockSize, Position.y);
     } else if (keyCode == ALLEGRO_KEY_D) {
+        if (Position.x + PlayScene::BlockSize >=
+            PlayScene::MapWidth * PlayScene::BlockSize)
+            return;
         Velocity = Engine::Point(speed, 0);
         TargetPosition =
             Engine::Point(Position.x + PlayScene::BlockSize, Position.y);
+    } else {
+        return;
     }
+    is_moving = true;
 }
 
 void Player::Draw() const {

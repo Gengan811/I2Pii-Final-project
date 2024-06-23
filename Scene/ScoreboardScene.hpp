@@ -12,12 +12,13 @@
 #include <string>
 #include <vector>
 #include "Engine/IScene.hpp"
-extern int FinalScore;
+
 class ScoreboardScene final : public Engine::IScene {
    private:
     std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> bgmInstance;
 
    public:
+    int FinalScore;
     explicit ScoreboardScene() = default;
     void Initialize() override;
     void Terminate() override;
