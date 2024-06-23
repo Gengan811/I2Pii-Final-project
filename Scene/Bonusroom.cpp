@@ -11,7 +11,6 @@
 #include <string>
 #include <vector>
 #include "Enemy/Enemy.hpp"
-#include "Enemy/SoldierEnemy.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -20,8 +19,8 @@
 #include "Player/Seele.hpp"
 #include "Player/Wolf.hpp"
 #include "Scene/PlayScene.hpp"
-#include "UI/Component/Label.hpp"
 #include "UI/Component/ImageButton.hpp"
+#include "UI/Component/Label.hpp"
 
 int x, y, z;
 int effect_x, effect_y, effect_z;
@@ -30,9 +29,9 @@ void Bonusroom::Initialize() {
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
     int halfW = w / 2;
     int halfH = h / 2;
-    x = rand() % 21;
-    y = rand() % 21;
-    z = rand() % 21;
+    x = rand() % 20;
+    y = rand() % 20;
+    z = rand() % 20;
     if (x < 2)
         effect_x = 1;
     else if (x < 10)
@@ -49,7 +48,7 @@ void Bonusroom::Initialize() {
         effect_x = 7;
     else if (x < 19)
         effect_x = 8;
-    else if (x < 20)
+    else if (x <= 20)
         effect_x = 9;
     if (y < 2)
         effect_y = 1;
@@ -67,7 +66,7 @@ void Bonusroom::Initialize() {
         effect_y = 7;
     else if (y < 19)
         effect_y = 8;
-    else if (y < 20)
+    else if (y <= 20)
         effect_y = 9;
     if (z < 2)
         effect_z = 1;
@@ -85,7 +84,7 @@ void Bonusroom::Initialize() {
         effect_z = 7;
     else if (z < 19)
         effect_z = 8;
-    else if (z < 20)
+    else if (z <= 20)
         effect_z = 9;
     std::vector<std::string> texts = {
         "ATK↑" /*10%*/,      "Heal 50%" /*40%*/, "SPD↑" /*10%*/,
@@ -95,33 +94,34 @@ void Bonusroom::Initialize() {
     Engine::ImageButton* btn;
     btn = new Engine::ImageButton(
         "bonus/bonus" + std::to_string(effect_x) + ".png",
-        "bonus/bonus" + std::to_string(effect_x) + ".png", halfW - 200,
-        halfH / 2 + 200, 200, 400);
+        "bonus/bonus" + std::to_string(effect_x) + ".png", halfW,
+        halfH / 2 + 200, 100, 100);
     btn->SetOnClickCallback(
         std::bind(&Bonusroom::ButtonOnClick, this, effect_x));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label(texts[effect_x], "GenYoGothic-N.ttc", 60,
-                                   halfW - 300, h - 250, 255, 255, 255, 250,
+    AddNewObject(new Engine::Label(texts[effect_x - 1], "GenYoGothic-N.ttc", 60,
+                                   halfW + 100, h - 250, 255, 255, 255, 250,
                                    0.5, 0.5));
 
     btn = new Engine::ImageButton(
         "bonus/bonus" + std::to_string(effect_y) + ".png",
         "bonus/bonus" + std::to_string(effect_y) + ".png", halfW - 200,
-        halfH / 2 + 200, 200, 400);
+        halfH / 2 + 200, 100, 100);
     btn->SetOnClickCallback(
         std::bind(&Bonusroom::ButtonOnClick, this, effect_y));
     AddNewControlObject(btn);
 
-    AddNewObject(new Engine::Label(texts[effect_y], "GenYoGothic-N.ttc", 60,
+    AddNewObject(new Engine::Label(texts[effect_y - 1], "GenYoGothic-N.ttc", 60,
                                    halfW, h - 250, 255, 255, 255, 250, 0.5,
                                    0.5));
-    btn = new Engine::ImageButton("stage-select/dirt.png",
-                                  "stage-select/floor.png", halfW - 200,
-                                  halfH / 2 + 200, 200, 400);
+    btn = new Engine::ImageButton(
+        "bonus/bonus" + std::to_string(effect_z) + ".png",
+        "bonus/bonus" + std::to_string(effect_z) + ".png", halfW - 400,
+        halfH / 2 + 200, 100, 100);
     btn->SetOnClickCallback(
         std::bind(&Bonusroom::ButtonOnClick, this, effect_z));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label(texts[effect_z], "GenYoGothic-N.ttc", 60,
+    AddNewObject(new Engine::Label(texts[effect_z - 1], "GenYoGothic-N.ttc", 60,
                                    halfW + 300, h - 250, 255, 255, 255, 250,
                                    0.5, 0.5));
 }

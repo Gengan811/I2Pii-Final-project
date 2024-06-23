@@ -9,9 +9,10 @@
 #include <string>
 #include <vector>
 
+#include "Enemy/Boss.hpp"
 #include "Enemy/Enemy.hpp"
-#include "Enemy/SampleEnemy.hpp"
-#include "Enemy/SoldierEnemy.hpp"
+#include "Enemy/MeleeEnemy.hpp"
+#include "Enemy/RangedEnemy.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -88,11 +89,10 @@ void PlayScene::Terminate() {
     IScene::Terminate();
 }
 void PlayScene::Update(float deltaTime) {
-    IScene::Update(deltaTime);
     if (EnemyGroup->GetObjects().empty()) {
         FinalScore = lives * money / 100;
         if (StageID < 3) {
-            Engine::GameEngine::GetInstance().ChangeScene("bonusroom");
+            Engine::GameEngine::GetInstance().ChangeScene("bonus");
         } else {
             Engine::GameEngine::GetInstance().ChangeScene("win");
         }
@@ -100,6 +100,7 @@ void PlayScene::Update(float deltaTime) {
     if (lives <= 0) {
         Engine::GameEngine::GetInstance().ChangeScene("lose-scene");
     }
+    IScene::Update(deltaTime);
 }
 
 void PlayScene::Draw() const {
@@ -126,8 +127,10 @@ void PlayScene::OnKeyDown(int keyCode) {
 }
 
 void PlayScene::ReadMap() {
-    std::string filename =
-        std::string("Resource/map") + std::to_string(MapId) + ".txt";
+    std::string filename = std::string("Resource/map/") +
+                           std::to_string(MapId) + "/" +
+                           std::to_string(StageID) + ".txt";
+    Engine::LOG(Engine::INFO) << "Read map: " << filename;
     // Read map file.
     char c;
     std::vector<bool> mapData;
@@ -170,25 +173,35 @@ void PlayScene::ReadMap() {
     }
 }
 void PlayScene::ReadEnemy() {
-    std::string filename =
-        std::string("Resource/enemy") + std::to_string(MapId) + ".txt";
+    std::string filename = "Resource/enemy/" + std::to_string(MapId) + "/" +
+                           std::to_string(StageID) + ".txt";
     // Read enemy file.
     int type, x, y;
     std::ifstream fin(filename);
     while (fin >> type && fin >> x && fin >> y) {
         switch (type) {
             case 1:
-                EnemyGroup->AddNewObject(
-                    new SoldierEnemy(BlockSize / 2 + BlockSize * x,
-                                     BlockSize / 2 + BlockSize * y));
+                EnemyGroup->AddNewObject(new RangedEnemy(
+                    "play/enemy/Scene" + std::to_string(MapId) + "_" +
+                        "minion_right.png",
+                    "", BlockSize / 2 + BlockSize * x,
+                    BlockSize / 2 + BlockSize * y, 50, 50, 1, 10, 5));
                 break;
 
             case 2:
-                EnemyGroup->AddNewObject(
-                    new SampleEnemy(BlockSize / 2 + BlockSize * x,
-                                    BlockSize / 2 + BlockSize * y));
+                EnemyGroup->AddNewObject(new MeleeEnemy(
+                    "play/enemy/Scene" + std::to_string(MapId) + "_" +
+                        "miniboss_right.png",
+                    BlockSize / 2 + BlockSize * x,
+                    BlockSize / 2 + BlockSize * y, 50, 50, 1, 10, 5, 10));
                 break;
-
+            case 3:
+                EnemyGroup->AddNewObject(new Boss(
+                    "play/enemy/Scene" + std::to_string(MapId) + "_" +
+                        "boss.png",
+                    "", BlockSize / 2 + BlockSize * x,
+                    BlockSize / 2 + BlockSize * y, 50, 50, 1, 10, 5, 10));
+                break;
             default:
                 break;
         }
