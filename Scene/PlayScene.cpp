@@ -19,6 +19,7 @@
 #include "PlayScene.hpp"
 #include "Player/Wolf.hpp"
 #include "Player/Seele.hpp"
+#include "Player/RangedPlayer.hpp"
 #include "Scene/ScoreboardScene.hpp"
 #include "Turret/FourthTurret.hpp"
 #include "Turret/LaserTurret.hpp"
@@ -74,6 +75,7 @@ void PlayScene::Initialize() {
     AddNewObject(EnemyGroup = new Group());
     AddNewObject(BulletGroup = new Group());
     AddNewObject(EffectGroup = new Group());
+    AddNewObject(PlayerGroup = new Group());
     // Should support buttons.
     AddNewControlObject(UIGroup = new Group());
 
@@ -189,6 +191,7 @@ void PlayScene::ReadEnemy() {
     }
     fin.close();
 }
+
 void PlayScene::ConstructUI() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
@@ -200,13 +203,14 @@ void PlayScene::ConstructUI() {
             AddNewControlObject(player =
                                     new Wolf(BlockSize / 2 + BlockSize * 10,
                                              BlockSize / 2 + BlockSize * 10));
+            PlayerGroup->AddNewObject(player);
             break;
         case 2:
             AddNewControlObject(player =
                                     new Seele(BlockSize / 2 + BlockSize * 10,
                                               BlockSize / 2 + BlockSize * 10));
+            PlayerGroup->AddNewObject(player);
             break;
-
         default:
             break;
     }

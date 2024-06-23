@@ -6,6 +6,7 @@
 
 #include "Bullet/Bullet.hpp"
 #include "Enemy/Enemy.hpp"
+#include "Player/Player.hpp"
 
 class Enemy;
 class PlayScene;

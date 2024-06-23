@@ -13,7 +13,7 @@ SoldierEnemy::SoldierEnemy(int x, int y)
                   y,
                   50,
                   50,
-                  5,
+                  1,
                   100,
                   5) {}
 
