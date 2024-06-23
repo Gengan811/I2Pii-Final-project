@@ -1,29 +1,36 @@
+//
+// Created by 胡耿安 on 2024/6/23.
+//
+
+#include "Boss.hpp"
 #include <string>
 
 #include "Bullet/FireBullet.hpp"
-#include "Enemy.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Scene/PlayScene.hpp"  // Include the header file for PlayScene
-#include "SoldierEnemy.hpp"
+#include "Boss.hpp"
+#include "Enemy.hpp"
 
-SoldierEnemy::SoldierEnemy(int x, int y)
-    : RangedEnemy("play/enemy-1.png",
-                  "play/bullet-1.png",
-                  x,
-                  y,
-                  50,
-                  50,
-                  1,
-                  10,
-                  5) {}
+Boss::Boss(std::string imgBase,
+           std::string imgBullet,
+           float x,
+           float y,
+           float radius,
+           float speed,
+           float cooldown,
+           float hp,
+           int attack,
+           int money)
+        : RangedEnemy(imgBase, imgBullet, x, y, radius, speed,cooldown, hp, money){
+}
 
-void SoldierEnemy::Update(float deltaTime) {
+void Boss::Update(float deltaTime) {
     RangedEnemy::Update(deltaTime);
 }
-void SoldierEnemy::Draw() const {
+void Boss::Draw() const {
     RangedEnemy::Draw();
 }
-void SoldierEnemy::CreateBullet() {
+void Boss::CreateBullet() {
     Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2),
                                        sin(Rotation - ALLEGRO_PI / 2));
     float rotation = atan2(diff.y, diff.x);
@@ -31,6 +38,7 @@ void SoldierEnemy::CreateBullet() {
     Engine::Point normal = Engine::Point(-normalized.y, normalized.x);
     // Change bullet position to the front of the player.
     getPlayScene()->BulletGroup->AddNewObject(new FireBullet(
-        Position + normalized * 36 - normal * 6, diff, rotation, this, false));
+            Position + normalized * 36 - normal * 6, diff, rotation, this, false));
     AudioHelper::PlayAudio("gun.wav");
 }
+

@@ -18,7 +18,7 @@ class RangedEnemy : public Enemy {
     std::list<Sprite*>::iterator lockedTurretIterator;
     PlayScene* getPlayScene();
     // Reference: Design Patterns - Factory Method.
-    virtual void CreateBullet() = 0;
+    virtual void CreateBullet();
 
    public:
     RangedEnemy(std::string imgBase,

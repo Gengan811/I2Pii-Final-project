@@ -81,12 +81,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Enemy/Enemy.hpp
         Enemy/RangedEnemy.cpp
         Enemy/RangedEnemy.hpp
-        Enemy/SoldierEnemy.cpp
-        Enemy/SoldierEnemy.hpp
         Enemy/MeleeEnemy.cpp
         Enemy/MeleeEnemy.hpp
-        Enemy/SampleEnemy.cpp
-        Enemy/SampleEnemy.hpp
 
         UI/Animation/ExplosionEffect.cpp
         UI/Animation/ExplosionEffect.hpp
@@ -101,6 +97,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         main.cpp
         UI/Component/Slider.cpp
         UI/Component/Slider.hpp
+        Enemy/Boss.cpp
+        Enemy/Boss.hpp
 
 )
 

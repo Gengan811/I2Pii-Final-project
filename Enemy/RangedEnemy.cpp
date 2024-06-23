@@ -8,14 +8,17 @@
 #include "Engine/Group.hpp"
 #include "Engine/IObject.hpp"
 #include "Engine/LOG.hpp"
+#include "Engine/AudioHelper.hpp"
 #include "Engine/Point.hpp"
 #include "RangedEnemy.hpp"
 #include "Scene/PlayScene.hpp"
+#include "Bullet/FireBullet.hpp"
 
 PlayScene* RangedEnemy::getPlayScene() {
     return dynamic_cast<PlayScene*>(
         Engine::GameEngine::GetInstance().GetActiveScene());
 }
+
 RangedEnemy::RangedEnemy(std::string imgBase,
                          std::string imgBullet,
                          float x,
@@ -72,4 +75,16 @@ void RangedEnemy::Update(float deltaTime) {
 
 void RangedEnemy::Draw() const {
     Enemy::Draw();
+}
+
+void RangedEnemy::CreateBullet() {
+    Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2),
+                                       sin(Rotation - ALLEGRO_PI / 2));
+    float rotation = atan2(diff.y, diff.x);
+    Engine::Point normalized = diff.Normalize();
+    Engine::Point normal = Engine::Point(-normalized.y, normalized.x);
+    // Change bullet position to the front of the player.
+    getPlayScene()->BulletGroup->AddNewObject(new FireBullet(
+            Position + normalized * 36 - normal * 6, diff, rotation, this, false));
+    AudioHelper::PlayAudio("gun.wav");
 }

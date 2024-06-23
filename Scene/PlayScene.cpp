@@ -10,8 +10,9 @@
 #include <vector>
 
 #include "Enemy/Enemy.hpp"
-#include "Enemy/SampleEnemy.hpp"
-#include "Enemy/SoldierEnemy.hpp"
+#include "Enemy/MeleeEnemy.hpp"
+#include "Enemy/RangedEnemy.hpp"
+#include "Enemy/Boss.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -41,7 +42,7 @@ const std::vector<int> PlayScene::code = {
     ALLEGRO_KEY_UP,    ALLEGRO_KEY_UP,       ALLEGRO_KEY_DOWN,
     ALLEGRO_KEY_DOWN,  ALLEGRO_KEY_LEFT,     ALLEGRO_KEY_LEFT,
     ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_RIGHT,    ALLEGRO_KEY_B,
-    ALLEGRO_KEY_A,     ALLEGRO_KEYMOD_SHIFT, ALLEGRO_KEY_ENTER};
+    ALLEGRO_KEY_A,     ALLEGRO_KEYMOD_SHIFT, ALLEGRO_KEY_ENTER };
 Engine::Point PlayScene::GetClientSize() {
     return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
 }
@@ -175,16 +176,20 @@ void PlayScene::ReadEnemy() {
         switch (type) {
             case 1:
                 EnemyGroup->AddNewObject(
-                    new SoldierEnemy(BlockSize / 2 + BlockSize * x,
-                                     BlockSize / 2 + BlockSize * y));
+                    new RangedEnemy("play/enemy/Scene" + std::to_string(MapId) + "_" + "minion_right.png", "", BlockSize / 2 + BlockSize * x,
+                                     BlockSize / 2 + BlockSize * y, 50, 50, 1, 10, 5));
                 break;
 
             case 2:
                 EnemyGroup->AddNewObject(
-                    new SampleEnemy(BlockSize / 2 + BlockSize * x,
-                                    BlockSize / 2 + BlockSize * y));
+                    new MeleeEnemy("play/enemy/Scene" + std::to_string(MapId) + "_" + "miniboss_right.png", BlockSize / 2 + BlockSize * x,
+                                    BlockSize / 2 + BlockSize * y, 50, 50, 1, 10, 5, 10));
                 break;
-
+            case 3:
+                EnemyGroup->AddNewObject(
+                    new Boss("play/enemy/Scene" + std::to_string(MapId) + "_" + "boss.png", "", BlockSize / 2 + BlockSize * x,
+                             BlockSize / 2 + BlockSize * y, 50, 50, 1, 10, 5, 10));
+                break;
             default:
                 break;
         }
