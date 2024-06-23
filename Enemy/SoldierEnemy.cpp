@@ -24,8 +24,8 @@ void SoldierEnemy::Draw() const {
     RangedEnemy::Draw();
 }
 void SoldierEnemy::CreateBullet() {
-    Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2),
-                                       sin(Rotation - ALLEGRO_PI / 2));
+    Engine::Point diff = Engine::Point(cos(attackRotation - ALLEGRO_PI / 2),
+                                       sin(attackRotation - ALLEGRO_PI / 2));
     float rotation = atan2(diff.y, diff.x);
     Engine::Point normalized = diff.Normalize();
     Engine::Point normal = Engine::Point(-normalized.y, normalized.x);

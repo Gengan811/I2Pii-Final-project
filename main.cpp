@@ -11,6 +11,7 @@
 #include "Scene/StageSelectScene.hpp"
 #include "Scene/StartScene.hpp"
 #include "Scene/WinScene.hpp"
+#include "Scene/Bonusroom.hpp"
 
 int main(int argc, char** argv) {
     Engine::LOG::SetConfig(true);
@@ -24,6 +25,7 @@ int main(int argc, char** argv) {
     game.AddNewScene("start", new StartScene());
     game.AddNewScene("scoreboard", new ScoreboardScene());
     game.AddNewScene("settings", new SettingsScene());
+    game.AddNewScene("bonus", new Bonusroom());
 
     game.Start("start", 60, 1600, 832);
     return 0;

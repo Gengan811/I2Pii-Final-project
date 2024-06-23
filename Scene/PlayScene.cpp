@@ -91,7 +91,11 @@ void PlayScene::Update(float deltaTime) {
     IScene::Update(deltaTime);
     if (EnemyGroup->GetObjects().empty()) {
         FinalScore = lives * money / 100;
-        Engine::GameEngine::GetInstance().ChangeScene("win");
+        if (StageID < 3) {
+            Engine::GameEngine::GetInstance().ChangeScene("bonusroom");
+        } else {
+            Engine::GameEngine::GetInstance().ChangeScene("win");
+        }
     }
     if (lives <= 0) {
         Engine::GameEngine::GetInstance().ChangeScene("lose-scene");
@@ -201,13 +205,13 @@ void PlayScene::ConstructUI() {
     switch (CharacterId) {
         case 1:
             AddNewControlObject(player =
-                                    new Wolf(BlockSize / 2 + BlockSize * 10,
-                                             BlockSize / 2 + BlockSize * 10));
+                                    new Wolf(BlockSize / 2 + BlockSize * 21,
+                                             BlockSize / 2 + BlockSize * 12));
             break;
         case 2:
             AddNewControlObject(player =
-                                    new Seele(BlockSize / 2 + BlockSize * 10,
-                                              BlockSize / 2 + BlockSize * 10));
+                                    new Seele(BlockSize / 2 + BlockSize * 21,
+                                              BlockSize / 2 + BlockSize * 12));
             break;
         default:
             break;

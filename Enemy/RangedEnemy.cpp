@@ -39,7 +39,7 @@ void RangedEnemy::Update(float deltaTime) {
     }
     if (Target) {
         Engine::Point originRotation = Engine::Point(
-            cos(Rotation - ALLEGRO_PI / 2), sin(Rotation - ALLEGRO_PI / 2));
+            cos(attackRotation - ALLEGRO_PI / 2), sin(attackRotation - ALLEGRO_PI / 2));
         Engine::Point targetRotation =
             (Target->Position - Position).Normalize();
         float maxRotateRadian = rotateRadian * deltaTime;
@@ -59,7 +59,7 @@ void RangedEnemy::Update(float deltaTime) {
                        radian;
         // Add 90 degrees (PI/2 radian), since we assume the image is oriented
         // upward.
-        Rotation = atan2(rotation.y, rotation.x) + ALLEGRO_PI / 2;
+        attackRotation = atan2(rotation.y, rotation.x) + ALLEGRO_PI / 2;
         // Shoot reload.
         reload -= deltaTime;
         if (reload <= 0) {

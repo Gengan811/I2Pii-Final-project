@@ -41,6 +41,10 @@ Player::Player(std::string img,
 }
 
 void Player::Hit(float damage) {
+    if (shield > 0) {
+        shield--;
+        return;
+    }
     hp -= damage;
     if (hp <= 0) {
         Engine::GameEngine::GetInstance().ChangeScene("lose-scene");

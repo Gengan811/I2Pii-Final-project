@@ -60,6 +60,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/SettingsScene.hpp
         Scene/PlayScene.cpp
         Scene/PlayScene.hpp
+        Scene/Bonusroom.cpp
+        Scene/Bonusroom.hpp
 
         Bullet/Bullet.cpp
         Bullet/Bullet.hpp

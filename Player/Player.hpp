@@ -16,7 +16,7 @@ class Bullet;
 class PlayScene;
 
 class Player : public Engine::Sprite {
-   protected:
+   public:
     std::vector<Engine::Point> path;
     float hp;
     float atk;
@@ -25,6 +25,7 @@ class Player : public Engine::Sprite {
     float reload = 0;
     float rotateRadian = 2 * ALLEGRO_PI;
     float speed;
+    int shield;
     bool is_moving;
     Engine::Point TargetPosition;
     // Color tint.
@@ -32,7 +33,6 @@ class Player : public Engine::Sprite {
     // Assume a circle is a good approximation of the sprite's boundary.
     PlayScene* getPlayScene();
 
-   public:
     float CollisionRadius = 0;
     Player(std::string img,
            float x,

@@ -22,7 +22,7 @@ Wolf::Wolf(int x, int y)
                    50,
                    200,
                    1,
-                   500) {}
+                   1) {}
 
 void Wolf::CreateBullet() {
     Engine::Point diff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2),

@@ -21,6 +21,7 @@
 #include "Player/Wolf.hpp"
 #include "Scene/PlayScene.hpp"
 #include "UI/Component/Label.hpp"
+#include "UI/Component/ImageButton.hpp"
 
 int x, y, z;
 int effect_x, effect_y, effect_z;
@@ -32,100 +33,60 @@ void Bonusroom::Initialize() {
     x = rand() % 21;
     y = rand() % 21;
     z = rand() % 21;
-    switch (x) {
-        case x < 2:
-            effect_x = 1;
-            break;
-        case x < 10:
-            effect_x = 2;
-            break;
-        case x < 12:
-            effect_x = 3;
-            break;
-        case x < 14:
-            effect_x = 4;
-            break;
-        case x < 16:
-            effect_x = 5;
-            break;
-        case x < 17:
-            effect_x = 6;
-            break;
-        case x < 18:
-            effect_x = 7;
-            break;
-        case x < 19:
-            effect_x = 8;
-            break;
-        case x < 20:
-            effect_x = 9;
-            break;
-        default:
-            break;
-    }
-    switch (y) {
-        case y < 2:
-            effect_y = 1;
-            break;
-        case y < 10:
-            effect_y = 2;
-            break;
-        case y < 12:
-            effect_y = 3;
-            break;
-        case y < 14:
-            effect_y = 4;
-            break;
-        case y < 16:
-            effect_y = 5;
-            break;
-        case y < 17:
-            effect_y = 6;
-            break;
-        case y < 18:
-            effect_y = 7;
-            break;
-        case y < 19:
-            effect_y = 8;
-            break;
-        case y < 20:
-            effect_y = 9;
-            break;
-        default:
-            break;
-    }
-    switch (z) {
-        case z < 2:
-            effect_z = 1;
-            break;
-        case z < 10:
-            effect_z = 2;
-            break;
-        case z < 12:
-            effect_z = 3;
-            break;
-        case z < 14:
-            effect_z = 4;
-            break;
-        case z < 16:
-            effect_z = 5;
-            break;
-        case z < 17:
-            effect_z = 6;
-            break;
-        case z < 18:
-            effect_z = 7;
-            break;
-        case z < 19:
-            effect_z = 8;
-            break;
-        case z < 20:
-            effect_z = 9;
-            break;
-        default:
-            break;
-    }
-
+    if (x < 2)
+        effect_x = 1;
+    else if (x < 10)
+        effect_x = 2;
+    else if (x < 12)
+        effect_x = 3;
+    else if (x < 14)
+        effect_x = 4;
+    else if (x < 16)
+        effect_x = 5;
+    else if (x < 17)
+        effect_x = 6;
+    else if (x < 18)
+        effect_x = 7;
+    else if (x < 19)
+        effect_x = 8;
+    else if (x < 20)
+        effect_x = 9;
+    if (y < 2)
+        effect_y = 1;
+    else if (y < 10)
+        effect_y = 2;
+    else if (y < 12)
+        effect_y = 3;
+    else if (y < 14)
+        effect_y = 4;
+    else if (y < 16)
+        effect_y = 5;
+    else if (y < 17)
+        effect_y = 6;
+    else if (y < 18)
+        effect_y = 7;
+    else if (y < 19)
+        effect_y = 8;
+    else if (y < 20)
+        effect_y = 9;
+    if (z < 2)
+        effect_z = 1;
+    else if (z < 10)
+        effect_z = 2;
+    else if (z < 12)
+        effect_z = 3;
+    else if (z < 14)
+        effect_z = 4;
+    else if (z < 16)
+        effect_z = 5;
+    else if (z < 17)
+        effect_z = 6;
+    else if (z < 18)
+        effect_z = 7;
+    else if (z < 19)
+        effect_z = 8;
+    else if (z < 20)
+        effect_z = 9;
     std::vector<std::string> texts = {
         "ATK↑" /*10%*/,      "Heal 50%" /*40%*/, "SPD↑" /*10%*/,
         "Heal 100%" /*10%*/, "AS↑ " /*10%*/,     "AS↑↑" /*5%*/,
@@ -169,7 +130,6 @@ void Bonusroom::Terminate() {
     IScene::Terminate();
 }
 void Bonusroom::ButtonOnClick(int x) {
-    ;
     PlayScene* play_scene = dynamic_cast<PlayScene*>(
         Engine::GameEngine::GetInstance().GetScene("play"));
     Player* player = play_scene->player;

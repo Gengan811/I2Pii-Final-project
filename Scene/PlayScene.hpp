@@ -42,6 +42,7 @@ class PlayScene final : public Engine::IScene {
     static const Engine::Point EndGridPoint;
     static const std::vector<int> code;
     int MapId;
+    int StageID;
     int CharacterId;
     float ticks;
     float deathCountDown;
