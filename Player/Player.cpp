@@ -63,35 +63,38 @@ void Player::OnKeyDown(int keyCode) {
     if (is_moving)
         return;
     if (keyCode == ALLEGRO_KEY_W) {
-        if (Position.y - PlayScene::BlockSize < 0)
-            return;
-        Velocity = Engine::Point(0, -speed);
-        TargetPosition =
-            Engine::Point(Position.x, Position.y - PlayScene::BlockSize);
+        if (getPlayScene()->CheckPixelValid(
+                Position.x, Position.y - PlayScene::BlockSize)) {
+            Velocity = Engine::Point(0, -speed);
+            TargetPosition =
+                Engine::Point(Position.x, Position.y - PlayScene::BlockSize);
+            is_moving = true;
+        }
     } else if (keyCode == ALLEGRO_KEY_S) {
-        if (Position.y + PlayScene::BlockSize >=
-            PlayScene::MapHeight * PlayScene::BlockSize)
-            return;
-        Velocity = Engine::Point(0, speed);
-        TargetPosition =
-            Engine::Point(Position.x, Position.y + PlayScene::BlockSize);
+        if (getPlayScene()->CheckPixelValid(
+                Position.x, Position.y + PlayScene::BlockSize)) {
+            Velocity = Engine::Point(0, speed);
+            TargetPosition =
+                Engine::Point(Position.x, Position.y + PlayScene::BlockSize);
+            is_moving = true;
+        }
     } else if (keyCode == ALLEGRO_KEY_A) {
-        if (Position.x - PlayScene::BlockSize < 0)
-            return;
-        Velocity = Engine::Point(-speed, 0);
-        TargetPosition =
-            Engine::Point(Position.x - PlayScene::BlockSize, Position.y);
+        if (getPlayScene()->CheckPixelValid(Position.x - PlayScene::BlockSize,
+                                            Position.y)) {
+            Velocity = Engine::Point(-speed, 0);
+            TargetPosition =
+                Engine::Point(Position.x - PlayScene::BlockSize, Position.y);
+            is_moving = true;
+        }
     } else if (keyCode == ALLEGRO_KEY_D) {
-        if (Position.x + PlayScene::BlockSize >=
-            PlayScene::MapWidth * PlayScene::BlockSize)
-            return;
-        Velocity = Engine::Point(speed, 0);
-        TargetPosition =
-            Engine::Point(Position.x + PlayScene::BlockSize, Position.y);
-    } else {
-        return;
+        if (getPlayScene()->CheckPixelValid(Position.x - PlayScene::BlockSize,
+                                            Position.y)) {
+            Velocity = Engine::Point(speed, 0);
+            TargetPosition =
+                Engine::Point(Position.x + PlayScene::BlockSize, Position.y);
+            is_moving = true;
+        }
     }
-    is_moving = true;
 }
 
 void Player::Draw() const {

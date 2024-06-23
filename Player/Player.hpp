@@ -30,10 +30,10 @@ class Player : public Engine::Sprite {
     // Color tint.
     ALLEGRO_COLOR Tint;
     // Assume a circle is a good approximation of the sprite's boundary.
-    float CollisionRadius = 0;
     PlayScene* getPlayScene();
 
    public:
+    float CollisionRadius = 0;
     Player(std::string img,
            float x,
            float y,

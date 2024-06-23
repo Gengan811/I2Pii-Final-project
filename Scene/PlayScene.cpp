@@ -11,14 +11,15 @@
 
 #include "Enemy/Enemy.hpp"
 #include "Enemy/SoldierEnemy.hpp"
+#include "Enemy/SampleEnemy.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
 #include "Engine/LOG.hpp"
 #include "Engine/Resources.hpp"
 #include "PlayScene.hpp"
-#include "Player/Wolf.hpp"
 #include "Player/Seele.hpp"
+#include "Player/Wolf.hpp"
 #include "Scene/ScoreboardScene.hpp"
 #include "Turret/FourthTurret.hpp"
 #include "Turret/LaserTurret.hpp"
@@ -183,6 +184,12 @@ void PlayScene::ReadEnemy() {
                                      BlockSize / 2 + BlockSize * y));
                 break;
 
+            case 2:
+                EnemyGroup->AddNewObject(
+                    new SampleEnemy(BlockSize / 2 + BlockSize * x,
+                                    BlockSize / 2 + BlockSize * y));
+                break;
+
             default:
                 break;
         }
@@ -235,4 +242,14 @@ void PlayScene::CalculateBFSDistance() {
             }
         }
     }
+}
+
+bool PlayScene::CheckSpaceValid(int x, int y) {
+    if (x < 0 || x >= MapWidth || y < 0 || y >= MapHeight)
+        return false;
+    return mapState[y][x] != TILE_OBSTACLE;
+}
+
+bool PlayScene::CheckPixelValid(int x, int y) {
+    return CheckSpaceValid(x / BlockSize, y / BlockSize);
 }

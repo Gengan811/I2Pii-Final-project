@@ -17,68 +17,31 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Engine/Allegro5Exception.hpp
         Engine/AudioHelper.cpp
         Engine/AudioHelper.hpp
-        Bullet/Bullet.cpp
-        Bullet/Bullet.hpp
-        Engine/Collider.cpp
-        Engine/Collider.hpp
-        Player/Player.cpp
-        Player/Player.hpp
-        Player/RangedPlayer.cpp
-        Player/RangedPlayer.hpp
-        Player/MeleePlayer.cpp
-        Player/MeleePlayer.hpp
-        Player/Wolf.cpp
-        Player/Wolf.hpp
-        Player/Seele.cpp
-        Player/Seele.hpp
-        Enemy/Enemy.cpp
-        Enemy/Enemy.hpp
-        Enemy/RangedEnemy.cpp
-        Enemy/RangedEnemy.hpp
-        UI/Animation/ExplosionEffect.cpp
-        UI/Animation/ExplosionEffect.hpp
-        Bullet/FireBullet.cpp
-        Bullet/FireBullet.hpp
         Engine/GameEngine.cpp
         Engine/GameEngine.hpp
         Engine/Group.cpp
         Engine/Group.hpp
         Engine/IControl.cpp
         Engine/IControl.hpp
-        UI/Component/Image.cpp
-        UI/Component/Image.hpp
-        UI/Component/ImageButton.cpp
-        UI/Component/ImageButton.hpp
+        Engine/Collider.cpp
+        Engine/Collider.hpp
         Engine/IObject.cpp
         Engine/IObject.hpp
         Engine/IScene.cpp
         Engine/IScene.hpp
-        UI/Component/Label.cpp
-        UI/Component/Label.hpp
         Engine/LOG.cpp
         Engine/LOG.hpp
-        Scene/LoseScene.cpp
-        Scene/LoseScene.hpp
-        main.cpp
-        UI/Animation/Plane.cpp
-        UI/Animation/Plane.hpp
-        Scene/PlayScene.cpp
-        Scene/PlayScene.hpp
         Engine/Point.cpp
         Engine/Point.hpp
         Engine/Resources.cpp
         Engine/Resources.hpp
-        UI/Component/Slider.cpp
-        UI/Component/Slider.hpp
-        Enemy/SoldierEnemy.cpp
-        Enemy/SoldierEnemy.hpp
         Engine/Sprite.cpp
         Engine/Sprite.hpp
+
         Scene/StageSelectScene.cpp
         Scene/StageSelectScene.hpp
         Scene/WinScene.cpp
         Scene/WinScene.hpp
-
         Scene/StartScene.cpp
         Scene/StartScene.hpp
         Scene/LoseScene.cpp
@@ -95,9 +58,50 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/CharacterSelectScene.hpp
         Scene/SettingsScene.cpp
         Scene/SettingsScene.hpp
+        Scene/PlayScene.cpp
+        Scene/PlayScene.hpp
 
+        Bullet/Bullet.cpp
+        Bullet/Bullet.hpp
         Bullet/FireBullet.cpp
         Bullet/FireBullet.hpp
+
+        Player/Player.cpp
+        Player/Player.hpp
+        Player/RangedPlayer.cpp
+        Player/RangedPlayer.hpp
+        Player/MeleePlayer.cpp
+        Player/MeleePlayer.hpp
+        Player/Wolf.cpp
+        Player/Wolf.hpp
+        Player/Seele.cpp
+        Player/Seele.hpp
+
+        Enemy/Enemy.cpp
+        Enemy/Enemy.hpp
+        Enemy/RangedEnemy.cpp
+        Enemy/RangedEnemy.hpp
+        Enemy/SoldierEnemy.cpp
+        Enemy/SoldierEnemy.hpp
+        Enemy/MeleeEnemy.cpp
+        Enemy/MeleeEnemy.hpp
+        Enemy/SampleEnemy.cpp
+        Enemy/SampleEnemy.hpp
+
+        UI/Animation/ExplosionEffect.cpp
+        UI/Animation/ExplosionEffect.hpp
+        UI/Animation/Plane.cpp
+        UI/Animation/Plane.hpp
+        UI/Component/Image.cpp
+        UI/Component/Image.hpp
+        UI/Component/ImageButton.cpp
+        UI/Component/ImageButton.hpp
+        UI/Component/Label.cpp
+        UI/Component/Label.hpp
+        main.cpp
+        UI/Component/Slider.cpp
+        UI/Component/Slider.hpp
+
 )
 
 IF (WIN32)

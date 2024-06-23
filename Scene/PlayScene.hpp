@@ -72,13 +72,12 @@ class PlayScene final : public Engine::IScene {
     void Update(float deltaTime) override;
     void Draw() const override;
     void OnKeyDown(int keyCode) override;
-    int GetMoney() const;
-    // void EarnMoney(int money);
     void ReadMap();
     void ReadEnemy();
     void ConstructUI();
     void UIBtnClicked(int id);
     void CalculateBFSDistance();
-    // void ModifyReadMapTiles();
+    bool CheckSpaceValid(int x, int y);
+    bool CheckPixelValid(int x, int y);
 };
 #endif  // PLAYSCENE_HPP

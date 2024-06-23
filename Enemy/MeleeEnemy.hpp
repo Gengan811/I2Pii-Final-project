@@ -18,7 +18,6 @@ class MeleeEnemy : public Enemy {
     std::list<Sprite*>::iterator lockedTurretIterator;
     PlayScene* getPlayScene();
     // Reference: Design Patterns - Factory Method.
-    virtual void CreateBullet() = 0;
 
    public:
     MeleeEnemy(std::string imgBase,
