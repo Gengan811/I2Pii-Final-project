@@ -16,6 +16,7 @@ protected:
 	float speed;
 	float hp;
 	int money;
+    float rotateRadian = 2 * ALLEGRO_PI;
 	PlayScene* getPlayScene();
 	virtual void OnExplode();
     float OriginalSpeed;

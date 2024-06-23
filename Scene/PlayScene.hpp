@@ -53,6 +53,7 @@ class PlayScene final : public Engine::IScene {
     Group* BulletGroup;
     Group* TowerGroup;
     Group* EnemyGroup;
+    Group* PlayerGroup;
     Group* EffectGroup;
     Group* UIGroup;
     Player* player;
@@ -74,6 +75,7 @@ class PlayScene final : public Engine::IScene {
     void OnKeyDown(int keyCode) override;
     void ReadMap();
     void ReadEnemy();
+    void ReadPlayer();
     void ConstructUI();
     void UIBtnClicked(int id);
     void CalculateBFSDistance();
