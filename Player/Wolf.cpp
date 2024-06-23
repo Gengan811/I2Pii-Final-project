@@ -4,7 +4,7 @@
 
 #include "Wolf.hpp"
 #include "Engine/LOG.hpp"
-#include "Bullet/MissileBullet.hpp"
+#include "Bullet/FireBullet.hpp"
 #include <allegro5/base.h>
 #include <cmath>
 #include <string>
@@ -30,8 +30,7 @@ void Wolf::CreateBullet() {
     Engine::Point normalized = diff.Normalize();
     Engine::Point normal = Engine::Point(-normalized.y, normalized.x);
     // Change bullet position to the front of the player.
-    getPlayScene()->BulletGroup->AddNewObject(new MissileBullet(Position + normalized * 36 - normal * 6, diff, rotation, this));
-    getPlayScene()->BulletGroup->AddNewObject(new MissileBullet(Position + normalized * 36 + normal * 6, diff, rotation, this));
+    getPlayScene()->BulletGroup->AddNewObject(new FireBullet(Position + normalized * 36 - normal * 6, diff, rotation, this));
     AudioHelper::PlayAudio("laser.wav");
 }
 

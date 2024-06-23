@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     game.AddNewScene("stage-select", new StageSelectScene());
     game.AddNewScene("character-select", new CharacterSelectScene());
     game.AddNewScene("start", new StartScene());
-    game.AddNewScene("scoreboard-scene", new ScoreboardScene());
+    game.AddNewScene("scoreboard", new ScoreboardScene());
     game.AddNewScene("settings", new SettingsScene());
 
     game.Start("start", 60, 1600, 832);

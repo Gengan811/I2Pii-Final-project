@@ -12,5 +12,6 @@ class FireBullet : public Bullet {
 public:
 	explicit FireBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent);
 	void OnExplode(Enemy* enemy) override;
+    void Update(float deltaTime) override;
 };
 #endif // FIREBULLET_HPP
