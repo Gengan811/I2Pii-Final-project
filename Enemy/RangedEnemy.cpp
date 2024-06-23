@@ -26,6 +26,7 @@ RangedEnemy::RangedEnemy(std::string imgBase,
                          float hp,
                          int money)
     : Enemy(imgBase, x, y, radius, speed, hp, money), coolDown(cooldown) {
+    reload = cooldown;
     CollisionRadius = radius;
 }
 

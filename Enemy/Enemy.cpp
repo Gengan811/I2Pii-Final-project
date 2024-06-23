@@ -24,16 +24,6 @@ PlayScene* Enemy::getPlayScene() {
 void Enemy::OnExplode() {
     getPlayScene()->EffectGroup->AddNewObject(
         new ExplosionEffect(Position.x, Position.y));
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> distId(1, 3);
-    std::uniform_int_distribution<std::mt19937::result_type> dist(1, 20);
-    for (int i = 0; i < 10; i++) {
-        // Random add 10 dirty effects.
-        getPlayScene()->GroundEffectGroup->AddNewObject(new DirtyEffect(
-            "play/dirty-" + std::to_string(distId(rng)) + ".png", dist(rng),
-            Position.x, Position.y));
-    }
 }
 Enemy::Enemy(std::string img,
              float x,
@@ -60,7 +50,6 @@ void Enemy::Hit(float damage) {
             it->Target = nullptr;
         for (auto& it : lockedBullets)
             it->Target = nullptr;
-        getPlayScene()->EarnMoney(money);
         getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
         AudioHelper::PlayAudio("explosion.wav");
     }

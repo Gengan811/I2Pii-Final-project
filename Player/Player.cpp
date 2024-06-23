@@ -43,14 +43,7 @@ Player::Player(std::string img,
 void Player::Hit(float damage) {
     hp -= damage;
     if (hp <= 0) {
-        // Remove all turret's reference to target.
-        // Remove all player's reference to enemy.
-        for (auto& it : lockedTurrets)
-            it->Target = nullptr;
-        for (auto& it : lockedBullets)
-            it->Target = nullptr;
-        getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
-        AudioHelper::PlayAudio("explosion.wav");
+        Engine::GameEngine::GetInstance().ChangeScene("lose-scene");
     }
 }
 
@@ -61,8 +54,6 @@ void Player::Update(float deltaTime) {
             Position = TargetPosition;
             Velocity = Engine::Point(0, 0);
             getPlayScene()->CalculateBFSDistance();
-        } else {
-            getPlayScene();
         }
         Sprite::Update(deltaTime);
     }

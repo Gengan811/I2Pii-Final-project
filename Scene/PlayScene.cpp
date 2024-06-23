@@ -18,6 +18,7 @@
 #include "Engine/Resources.hpp"
 #include "PlayScene.hpp"
 #include "Player/Wolf.hpp"
+#include "Player/Seele.hpp"
 #include "Scene/ScoreboardScene.hpp"
 #include "Turret/FourthTurret.hpp"
 #include "Turret/LaserTurret.hpp"
@@ -93,13 +94,11 @@ void PlayScene::Terminate() {
 void PlayScene::Update(float deltaTime) {
     IScene::Update(deltaTime);
     if (EnemyGroup->GetObjects().empty()) {
-        // Free resources.
-        if (lives <= 0)
-            Engine::GameEngine::GetInstance().ChangeScene("lose-scene");
-        else {
-            FinalScore = lives * money / 100;
-            Engine::GameEngine::GetInstance().ChangeScene("win");
-        }
+        FinalScore = lives * money / 100;
+        Engine::GameEngine::GetInstance().ChangeScene("win");
+    }
+    if (lives <= 0) {
+        Engine::GameEngine::GetInstance().ChangeScene("lose-scene");
     }
 }
 
@@ -124,13 +123,6 @@ void PlayScene::Draw() const {
 }
 void PlayScene::OnKeyDown(int keyCode) {
     IScene::OnKeyDown(keyCode);
-}
-int PlayScene::GetMoney() const {
-    return money;
-}
-void PlayScene::EarnMoney(int money) {
-    this->money += money;
-    UIMoney->Text = std::string("$") + std::to_string(this->money);
 }
 
 void PlayScene::ReadMap() {
@@ -208,6 +200,11 @@ void PlayScene::ConstructUI() {
             AddNewControlObject(player =
                                     new Wolf(BlockSize / 2 + BlockSize * 10,
                                              BlockSize / 2 + BlockSize * 10));
+            break;
+        case 2:
+            AddNewControlObject(player =
+                                    new Seele(BlockSize / 2 + BlockSize * 10,
+                                              BlockSize / 2 + BlockSize * 10));
             break;
 
         default:
