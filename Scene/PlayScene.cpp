@@ -28,6 +28,8 @@
 #include "UI/Animation/Plane.hpp"
 #include "UI/Component/Label.hpp"
 
+int FinalScore;
+
 bool PlayScene::DebugMode = true;
 const std::vector<Engine::Point> PlayScene::directions = {
     Engine::Point(-1, 0), Engine::Point(0, -1), Engine::Point(1, 0),

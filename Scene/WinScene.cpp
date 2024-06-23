@@ -27,8 +27,7 @@ void WinScene::Initialize() {
     int halfW = w / 2;
     int halfH = h / 2;
     char Score[20];
-    int score = Engine::GameEngine::GetScene("scoreboard").FinalScore;
-    std::string Scoreoutput = std::to_string(score);
+    std::string Scoreoutput = std::to_string(FinalScore);
     line = new Engine::Label(name, "GenJyuuGothic-Regular.ttf", 48, halfW - 475,
                              halfH + 198, 255, 255, 255, 255, 0.5, 0.5);
     AddNewObject(new Engine::Image("win/WinScene.png", 0, 0, w, h));
