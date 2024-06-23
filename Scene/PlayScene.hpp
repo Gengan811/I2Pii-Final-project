@@ -11,6 +11,7 @@
 #include "Player/Player.hpp"
 
 class Turret;
+class RangedPlayer;
 namespace Engine {
 class Group;
 class Image;
@@ -72,7 +73,7 @@ class PlayScene final : public Engine::IScene {
     void Draw() const override;
     void OnKeyDown(int keyCode) override;
     int GetMoney() const;
-    void EarnMoney(int money);
+    // void EarnMoney(int money);
     void ReadMap();
     void ReadEnemy();
     void ConstructUI();

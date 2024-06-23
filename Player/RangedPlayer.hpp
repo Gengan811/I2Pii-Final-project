@@ -10,7 +10,7 @@
 class PlayScene;
 
 class RangedPlayer : public Player {
-   protected:
+protected:
     float coolDown;
     float reload = 0;
     std::list<Sprite*>::iterator lockedTurretIterator;
@@ -18,15 +18,15 @@ class RangedPlayer : public Player {
     // Reference: Design Patterns - Factory Method.
     virtual void CreateBullet() = 0;
 
-   public:
+public:
     RangedPlayer(std::string imgBase,
-                std::string imgBullet,
-                float x,
-                float y,
-                float radius,
-                float speed,
-                float cooldown,
-                float hp);
+                 std::string imgBullet,
+                 float x,
+                 float y,
+                 float radius,
+                 float speed,
+                 float cooldown,
+                 float hp);
     void Update(float deltaTime) override;
     void Draw() const override;
 };

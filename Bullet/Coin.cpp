@@ -13,7 +13,7 @@ class Turret;
 
 Coin::Coin(Engine::Point position, Engine::Point forwardDirection, float rotation, Turret* parent) :
     Bullet("play/Coin.png", 200, 0, position, forwardDirection, rotation-ALLEGRO_PI/2 , parent) {
-    getPlayScene()->EarnMoney(5);
+    // getPlayScene()->EarnMoney(5);
 
 }
 void Coin::OnExplode(Enemy* enemy) {

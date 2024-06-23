@@ -11,7 +11,6 @@ class PlayScene;
 
 class Turret: public Engine::Sprite {
 protected:
-    int price;
     float coolDown;
     float reload = 0;
     float rotateRadian = 2 * ALLEGRO_PI;

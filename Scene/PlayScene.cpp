@@ -125,13 +125,6 @@ void PlayScene::Draw() const {
 void PlayScene::OnKeyDown(int keyCode) {
     IScene::OnKeyDown(keyCode);
 }
-int PlayScene::GetMoney() const {
-    return money;
-}
-void PlayScene::EarnMoney(int money) {
-    this->money += money;
-    UIMoney->Text = std::string("$") + std::to_string(this->money);
-}
 
 void PlayScene::ReadMap() {
     std::string filename =

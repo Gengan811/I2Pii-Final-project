@@ -8,12 +8,14 @@
 #include "Scene/PlayScene.hpp"
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
+#include "Player/Player.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
-void Bullet::OnExplode(Enemy* enemy) {
-}
+
+void Bullet::OnExplode(Enemy* enemy) {}
+
 Bullet::Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent) :
 	Sprite(img, position.x, position.y), speed(speed), damage(damage), parent(parent) {
 	Velocity = forwardDirection.Normalize() * speed;
@@ -23,11 +25,12 @@ Bullet::Bullet(std::string img, float speed, float damage, Engine::Point positio
     SlowDownFactor = 1.0f;
     SlowDownDuration = 0;
 }
+
 void Bullet::Update(float deltaTime) {
 	Sprite::Update(deltaTime);
 	PlayScene* scene = getPlayScene();
 	// Can be improved by Spatial Hash, Quad Tree, ...
-	// However simply loop through all enemies is enough for this program.
+	// However, simply loop through all enemies is enough for this program.
 	for (auto& it : scene->EnemyGroup->GetObjects()) {
 		Enemy* enemy = dynamic_cast<Enemy*>(it);
 		if (!enemy->Visible)
@@ -35,8 +38,8 @@ void Bullet::Update(float deltaTime) {
 		if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, enemy->Position, enemy->CollisionRadius)) {
 			OnExplode(enemy);
 			enemy->Hit(damage);
-            if (SlowDownEffect)
-                enemy->ApplySlowDown(SlowDownFactor, SlowDownDuration);
+            // if (SlowDownEffect)
+            //     enemy->ApplySlowDown(SlowDownFactor, SlowDownDuration);
 			getPlayScene()->BulletGroup->RemoveObject(objectIterator);
 			return;
 		}

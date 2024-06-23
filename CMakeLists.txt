@@ -96,6 +96,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
 
         Bullet/FireBullet.cpp
         Bullet/FireBullet.hpp
+        Bullet/LaserBullet.cpp
+        Bullet/MissileBullet.cpp
 )
 
 IF (WIN32)
