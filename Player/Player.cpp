@@ -17,7 +17,7 @@
 #include "Engine/LOG.hpp"
 #include "Player.hpp"
 #include "Scene/PlayScene.hpp"
-#include "UI/Animation/DirtyEffect.hpp"
+
 #include "UI/Animation/ExplosionEffect.hpp"
 
 PlayScene* Player::getPlayScene() {

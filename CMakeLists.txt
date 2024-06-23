@@ -21,8 +21,6 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Bullet/Bullet.hpp
         Engine/Collider.cpp
         Engine/Collider.hpp
-        UI/Animation/DirtyEffect.cpp
-        UI/Animation/DirtyEffect.hpp
         Player/Player.cpp
         Player/Player.hpp
         Player/RangedPlayer.cpp

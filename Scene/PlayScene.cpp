@@ -25,7 +25,7 @@
 #include "Turret/MachineGunTurret.hpp"
 #include "Turret/MissileTurret.hpp"
 #include "Turret/TurretButton.hpp"
-#include "UI/Animation/DirtyEffect.hpp"
+
 #include "UI/Animation/Plane.hpp"
 #include "UI/Component/Label.hpp"
 
