@@ -14,7 +14,7 @@ SoldierEnemy::SoldierEnemy(int x, int y)
                   50,
                   50,
                   1,
-                  100,
+                  10,
                   5) {}
 
 void SoldierEnemy::Update(float deltaTime) {
@@ -28,8 +28,9 @@ void SoldierEnemy::CreateBullet() {
                                        sin(Rotation - ALLEGRO_PI / 2));
     float rotation = atan2(diff.y, diff.x);
     Engine::Point normalized = diff.Normalize();
-    // Change bullet position to the front of the gun barrel.
-    Enemy::getPlayScene()->BulletGroup->AddNewObject(
-        new FireBullet(Position + normalized * 36, diff, rotation, this));
+    Engine::Point normal = Engine::Point(-normalized.y, normalized.x);
+    // Change bullet position to the front of the player.
+    getPlayScene()->BulletGroup->AddNewObject(new FireBullet(
+        Position + normalized * 36 - normal * 6, diff, rotation, this, false));
     AudioHelper::PlayAudio("gun.wav");
 }

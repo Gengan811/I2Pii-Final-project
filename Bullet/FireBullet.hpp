@@ -10,7 +10,7 @@ struct Point;
 
 class FireBullet : public Bullet {
 public:
-	explicit FireBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent);
+	explicit FireBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent, bool fromPlayer);
 	void OnExplode(Enemy* enemy) override;
     void Update(float deltaTime) override;
 };

@@ -10,10 +10,8 @@
 #include "Engine/Point.hpp"
 #include "Engine/GameEngine.hpp"
 
-class Turret;
-
-FireBullet::FireBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent) :
-	Bullet("play/bullet/bullet-1.png", 500, 1, position, forwardDirection, rotation - ALLEGRO_PI / 2, parent) {
+FireBullet::FireBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Sprite* parent, bool fromPlayer) :
+	Bullet("play/bullet/bullet-1.png", 500, 1, position, forwardDirection, rotation - ALLEGRO_PI / 2, parent, fromPlayer) {
 	// TODO: [CUSTOM-TOOL] You can imitate the 2 files: 'FireBullet.hpp', 'FireBullet.cpp' to create a new bullet.
 }
 

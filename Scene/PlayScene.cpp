@@ -10,8 +10,8 @@
 #include <vector>
 
 #include "Enemy/Enemy.hpp"
-#include "Enemy/SoldierEnemy.hpp"
 #include "Enemy/SampleEnemy.hpp"
+#include "Enemy/SoldierEnemy.hpp"
 #include "Engine/AudioHelper.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Engine/Group.hpp"
@@ -21,11 +21,6 @@
 #include "Player/Seele.hpp"
 #include "Player/Wolf.hpp"
 #include "Scene/ScoreboardScene.hpp"
-#include "Turret/FourthTurret.hpp"
-#include "Turret/LaserTurret.hpp"
-#include "Turret/MachineGunTurret.hpp"
-#include "Turret/MissileTurret.hpp"
-#include "Turret/TurretButton.hpp"
 
 #include "UI/Animation/Plane.hpp"
 #include "UI/Component/Label.hpp"
@@ -75,7 +70,6 @@ void PlayScene::Initialize() {
     AddNewObject(EnemyGroup = new Group());
     AddNewObject(BulletGroup = new Group());
     AddNewObject(EffectGroup = new Group());
-    AddNewObject(PlayerGroup = new Group());
     // Should support buttons.
     AddNewControlObject(UIGroup = new Group());
 
@@ -85,7 +79,7 @@ void PlayScene::Initialize() {
     deathBGMInstance =
         Engine::Resources::GetInstance().GetSampleInstance("astronomia.ogg");
     // Start BGM.
-    bgmId = AudioHelper::PlayBGM("play.ogg");
+    bgmId = AudioHelper::PlayBGM("Scene" + std::to_string(MapId) + "_bgm.ogg");
 }
 void PlayScene::Terminate() {
     AudioHelper::StopBGM(bgmId);
@@ -209,13 +203,11 @@ void PlayScene::ConstructUI() {
             AddNewControlObject(player =
                                     new Wolf(BlockSize / 2 + BlockSize * 10,
                                              BlockSize / 2 + BlockSize * 10));
-            PlayerGroup->AddNewObject(player);
             break;
         case 2:
             AddNewControlObject(player =
                                     new Seele(BlockSize / 2 + BlockSize * 10,
                                               BlockSize / 2 + BlockSize * 10));
-            PlayerGroup->AddNewObject(player);
             break;
         default:
             break;

@@ -10,7 +10,6 @@
 #include "Engine/Point.hpp"
 #include "Player/Player.hpp"
 
-class Turret;
 class RangedPlayer;
 namespace Engine {
 class Group;
@@ -53,7 +52,6 @@ class PlayScene final : public Engine::IScene {
     Group* BulletGroup;
     Group* TowerGroup;
     Group* EnemyGroup;
-    Group* PlayerGroup;
     Group* EffectGroup;
     Group* UIGroup;
     Player* player;
@@ -61,7 +59,6 @@ class PlayScene final : public Engine::IScene {
     Engine::Label* UILives;
     Engine::Image* imgTarget;
     Engine::Sprite* dangerIndicator;
-    Turret* preview;
     std::vector<std::vector<TileType>> mapState;
     std::vector<std::vector<int>> mapDistance;
     std::list<std::pair<int, float>> enemyWaveData;
