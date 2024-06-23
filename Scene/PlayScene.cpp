@@ -166,6 +166,7 @@ void PlayScene::ReadMap() {
                 TileMapGroup->AddNewObject(
                     new Engine::Image("play/map_floor.png", j * BlockSize,
                                       i * BlockSize, BlockSize, BlockSize));
+            Engine::LOG(Engine::INFO) << mapState[i][j];
         }
     }
 }
@@ -228,11 +229,11 @@ void PlayScene::CalculateBFSDistance() {
             if (next.x < 0 || next.x >= MapWidth || next.y < 0 ||
                 next.y >= MapHeight)
                 continue;
-            if (mapDistance[next.y][next.x] != -1 ||
-                mapState[next.y][next.x] != TILE_EMPTY)
-                continue;
-            mapDistance[next.y][next.x] = mapDistance[p.y][p.x] + 1;
-            que.push(next);
+            if (mapDistance[next.y][next.x] == -1 ||
+                mapState[next.y][next.x] == TILE_EMPTY) {
+                mapDistance[next.y][next.x] = mapDistance[p.y][p.x] + 1;
+                que.push(next);
+            }
         }
     }
 }

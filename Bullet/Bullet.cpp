@@ -9,6 +9,7 @@
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
 #include "Player/Player.hpp"
+#include "Scene/PlayScene.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -45,6 +46,10 @@ void Bullet::Update(float deltaTime) {
 		}
 	}
 	// Check if out of boundary.
-	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2, Engine::Point(0, 0), PlayScene::GetClientSize()))
+    int x = Position.x / PlayScene::BlockSize;
+    int y = Position.y / PlayScene::BlockSize;
+	if (!Engine::Collider::IsRectOverlap(Position - Size / 2, Position + Size / 2,
+                                         Engine::Point(0, 0), PlayScene::GetClientSize())
+        || getPlayScene()->mapState[y][x] != PlayScene::TILE_EMPTY)
 		getPlayScene()->BulletGroup->RemoveObject(objectIterator);
 }

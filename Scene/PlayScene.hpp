@@ -21,11 +21,6 @@ class Sprite;
 
 class PlayScene final : public Engine::IScene {
    private:
-    enum TileType {
-        TILE_OBSTACLE,
-        TILE_EMPTY,
-        TILE_SLOW,
-    };
     ALLEGRO_SAMPLE_ID bgmId;
     std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> deathBGMInstance;
 
@@ -34,6 +29,11 @@ class PlayScene final : public Engine::IScene {
     int money;
 
    public:
+    enum TileType {
+        TILE_OBSTACLE,
+        TILE_EMPTY,
+        TILE_SLOW,
+    };
     static bool DebugMode;
     static const std::vector<Engine::Point> directions;
     static const int MapWidth, MapHeight;
